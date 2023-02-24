@@ -3,3 +3,6 @@ test:
 	cargo run --package anyhow_example --color always
 t: 
 	just test
+docs: 
+	cd docs
+	mdbook build
