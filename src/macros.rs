@@ -1,8 +1,9 @@
 #[macro_export]
 /**
-Macro to [push_result][crate::ErrorLog::push_result]() and make funktion return given ErrorLog Variable if given result is an error.
+Macro to [push_result()][crate::ErrorLog::push_result] and make funktion return given [ErrorLog][crate::ErrorLog] Variable if given result is an error.
 
 Same as
+#[cfg_attr(tarpaulin, ignore)]
 ```
 # use error_log::ErrorLog;
 
@@ -29,7 +30,7 @@ macro_rules! try_add {
 
 #[macro_export]
 /**
-Macro  to [merge_result][crate::ErrorLog::merge_result]() and makes funktion return given ErrorLog Variable if given result is an error.
+Macro  to [merge_result()][crate::ErrorLog::merge_result] and makes funktion return given [ErrorLog][crate::ErrorLog] Variable if given result is an error.
 
 Same as
 ```
@@ -57,6 +58,9 @@ macro_rules! try_merge {
 }
 
 #[macro_export]
+/**
+Attach error to and return given [ErrorLog][crate::ErrorLog]
+*/
 macro_rules! return_err {
     ($err: expr, $errlog: ident) => {
         $errlog.push_err(e);
@@ -65,6 +69,11 @@ macro_rules! return_err {
 }
 
 #[macro_export]
+/**
+Set ok value of and return given [ErrorLog][crate::ErrorLog]
+
+
+*/
 macro_rules! return_ok {
     ($err: expr, $errlog: ident) => {
         $errlog.set_ok(e);

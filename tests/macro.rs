@@ -5,7 +5,7 @@ use error_log::{try_add, try_merge, ErrorLog};
 #[test]
 fn main() {
     let out = run();
-    assert!(!out.errors().is_empty());
+    assert!(!out.entries().is_empty());
     assert!(out.ok().is_none());
     let out2 = run_merge();
     assert!(out2.ok().is_none())

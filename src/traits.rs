@@ -1,28 +1,16 @@
+use crate::{Entry, ErrorLog};
 use std::{
     fmt::{Debug, Display},
     ops::{AddAssign, Deref, DerefMut, MulAssign},
     process::Termination,
 };
 
-use crate::ErrorLog;
-
-impl<T: Debug, E: Debug> Debug for ErrorLog<T, E> {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.debug_struct("ErrorLog")
-            .field("display_mode", &self.display_mode)
-            .field("errors", &self.errors)
-            .field("join", &self.join)
-            .field("ok", &self.ok)
-            .finish_non_exhaustive()
-    }
-}
-
 impl<T, E> IntoIterator for ErrorLog<T, E> {
-    type Item = E;
-    type IntoIter = std::vec::IntoIter<E>;
+    type Item = Entry<E>;
+    type IntoIter = std::vec::IntoIter<Self::Item>;
     /// Iterates over Error stored.
     fn into_iter(self) -> Self::IntoIter {
-        self.errors.into_iter()
+        self.entries.into_iter()
     }
 }
 impl<T: Debug, E> AddAssign<E> for ErrorLog<T, E> {

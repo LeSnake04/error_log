@@ -1,0 +1,6 @@
+[Hunspell.quirks]
+# Transforms words that are provided by the tokenizer
+# into word fragments based on the capture groups which are to
+# be checked.
+# If no capture groups are present, the matched word is whitelisted.
+transform_regex = ["^'([^\\s])'$", "^[0-9]+x$"]

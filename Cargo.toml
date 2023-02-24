@@ -8,7 +8,6 @@ resolver = "2"
 
 [dependencies]
 anyhow = { version = "1.0.69", optional = true }
-derivative = "2.2.0"
 log = "0.4.17"
 
 [features]
@@ -18,7 +17,10 @@ members = [
   "examples/*"
 ]
 
+[package.metadata.spellcheck]
+config = "spellcheck.toml"
 
 [dev-dependencies]
 anyhow = "1.0.69"
-trybuild = "1.0.77"
+pretty_assertions = "1.3.0"
+# trybuild = "1.0.77"
