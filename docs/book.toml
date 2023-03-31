@@ -18,7 +18,7 @@ pagetoc-width = "13%"
 content-max-width = "82%"
 
 [output.html]
-additional-css = ["mdbook-admonish.css","theme/pagetoc.css"]
+additional-css = ["mdbook-admonish.css","theme/pagetoc.css", "././mdbook-admonish.css"]
 additional-js  = ["theme/pagetoc.js"]
 default-theme = "dark"
 preferred-dark-theme = "ayu"
