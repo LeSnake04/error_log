@@ -1,12 +1,12 @@
-#![warn(clippy::all)]
-#![warn(missing_docs)]
-#![warn(rustdoc::all)]
 #![cfg_attr(not(feature = "std"), no_std)]
+#![warn(clippy::all, rustdoc::all, missing_docs)]
 /*!
 Libary to store errors and log messages and display them later.
 
 */
+
 extern crate alloc;
+
 mod display;
 mod entry;
 mod get;
