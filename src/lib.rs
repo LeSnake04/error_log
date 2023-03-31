@@ -109,10 +109,13 @@ impl<T, E> Default for ErrorLog<T, E> {
         Self {
             ok: None,
             entries: Vec::new(),
-            display_mode: FormatMode::default(),
-            print_fn: |e| println!("{e}"),
+            format_mode: FormatMode::default(),
+            display_fn: |lvl, e| println!("{lvl}: {e}"),
             max_level: LevelFilter::Trace,
-            join: None,
+            delimiter: "".into(),
+            join: false,
+            max_level_used: LevelFilter::Off,
+            instant_display: false,
         }
     }
 }
