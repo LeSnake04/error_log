@@ -1,9 +1,14 @@
-use crate::{Entry, ErrorLog};
-use std::{
-    fmt::{Debug, Display},
-    ops::{AddAssign, Deref, DerefMut, MulAssign},
-    process::Termination,
+use crate::{if_std, Entry, ErrorLog};
+use {
+    alloc::vec::IntoIter,
+    core::{
+        fmt::{Debug, Display},
+        ops::{AddAssign, Deref, DerefMut, MulAssign},
+    },
 };
+if_std! {
+    use std::process::Termination;
+}
 
 impl<T, E> IntoIterator for ErrorLog<T, E> {
     type Item = Entry<E>;
