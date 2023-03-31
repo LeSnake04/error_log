@@ -31,7 +31,6 @@ use core::fmt::Display;
 pub use entry::{Entry, EntryContent};
 pub use log::LevelFilter;
 pub use presets::*;
-
 pub(crate) use {if_not_std, if_std};
 if_std! {
     pub use std::{println, print};

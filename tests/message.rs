@@ -33,7 +33,7 @@ fn messages_max_level() {
 fn test_message(max_level: Option<LevelFilter>, expected: Entries<ParseIntError>) {
     let mut err_log = ErrorLog::<i32, ParseIntError>::new();
     if let Some(max) = max_level {
-        err_log.set_max_level(max);
+        err_log.max_level(max);
     }
     log_error!(err_log, "error");
     log_warn!(err_log, "warn");
