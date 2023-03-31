@@ -18,7 +18,7 @@ impl<T, E> IntoIterator for ErrorLog<T, E> {
         self.entries.into_iter()
     }
 }
-impl<T: Debug, E> AddAssign<E> for ErrorLog<T, E> {
+impl<T, E: Debug + Display> AddAssign<E> for ErrorLog<T, E> {
     /// Make `err_log += ERROR` store error of [Result] if any.
     ///
     /// Shorthand for [push_err()][crate::ErrorLog::push_err]
@@ -27,7 +27,7 @@ impl<T: Debug, E> AddAssign<E> for ErrorLog<T, E> {
     }
 }
 
-impl<T: Debug, U, E: Debug + Display + 'static> AddAssign<Result<U, E>> for ErrorLog<T, E> {
+impl<T: Debug, U, E: Debug + Display> AddAssign<Result<U, E>> for ErrorLog<T, E> {
     /// Make `err_log += RESULT` store error of [Result] if any.
     ///
     /// Shorthand for [push_result()][crate::ErrorLog::push_result]
@@ -46,7 +46,9 @@ impl<T: Debug, E> Termination for ErrorLog<T, E> {
     }
 }
 
-impl<T: Debug, U: Into<T>, E, F: Into<E>> MulAssign<Result<U, F>> for ErrorLog<T, E> {
+impl<T: Debug, U: Into<T>, E: Debug + Display, F: Into<E>> MulAssign<Result<U, F>>
+    for ErrorLog<T, E>
+{
     fn mul_assign(&mut self, rhs: Result<U, F>) {
         self.merge_result(rhs);
     }
