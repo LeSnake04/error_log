@@ -19,7 +19,7 @@ impl<T: Debug> ErrorLog<T, anyhow::Error> {
     /// Creates a new [ErrorLog][crate::ErrorLog] and sets the PrintMode to Debug. Indented for best [anyhow] compatibilty
     pub fn new_anyhow() -> Self {
         let mut out = Self::new();
-        out.set_display_mode(crate::FormatMode::Debug);
+        out.display_mode(crate::FormatMode::Debug);
         out
     }
 }
