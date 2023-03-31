@@ -5,75 +5,68 @@ use log::LevelFilter;
 /// Attach error message to given [ErrorLog]
 macro_rules! log_error {
     ($errlog: ident, $($msg: tt)+) => {
-        error_log::internal_log_push!($errlog, Error, $($msg)+);
+        $errlog.push_message(error_log::LevelFilter::Debug, format!($($msg)+));
     };
 }
 #[macro_export]
 /// Attach warning to given [ErrorLog]
 macro_rules! log_warn {
     ($errlog: ident, $($msg: tt)+) => {
-        error_log::internal_log_push!($errlog, Warn, $($msg)+);
+        $errlog.push_message(error_log::LevelFilter::Warn, format!($($msg)+));
     };
 }
 #[macro_export]
 /// Attach information to given [ErrorLog]
 macro_rules! log_info {
     ($errlog: ident, $($msg: tt)+) => {
-        error_log::internal_log_push!($errlog, Info, $($msg)+);
+        $errlog.push_message(error_log::LevelFilter::Info, format!($($msg)+));
     };
 }
 #[macro_export]
-/// Attach debug message to given [ErrorLog]
+/// Attaches debug message to given [ErrorLog]
 macro_rules! log_debug {
     ($errlog: ident, $($msg: tt)+) => {
-        error_log::internal_log_push!($errlog, Debug, $($msg)+);
+        $errlog.push_message(error_log::LevelFilter::Debug, format!($($msg)+));
     };
 }
 #[macro_export]
 /// Attach trace message to given [ErrorLog]
 macro_rules! log_trace {
     ($errlog: ident, $($msg: tt)+) => {
-        error_log::internal_log_push!($errlog, Trace, $($msg)+);
+        $errlog.push_message(error_log::LevelFilter::Trace, format!($($msg)+));
     };
 }
 
-#[macro_export]
-#[doc(hidden)]
-/// Intended for internal use in other macros only.
-macro_rules! internal_log_push (
-    ($errlog: ident, $level: ident, $($msg:tt)+) => (
-        $errlog.push_message(error_log::LevelFilter::$level, format!($($msg)+))
-    )
-);
-
 impl<T, E> ErrorLog<T, E> {
-    /// Set max [LevelFilter] of displayed messages
-    pub fn set_max_level(&mut self, level: LevelFilter) -> &mut Self {
+    /// Sets max [LevelFilter] of displayed messages
+    /// Note: when [LevelFilter::Off], all messages get ignored, but errors still show
+    pub fn max_level(&mut self, level: LevelFilter) -> &mut Self {
         self.max_level = level;
         self
     }
-    /// Set different max [LevelFilter] of displayed messages depending on if this is an debug build or a release one.
-    pub fn set_max_level_debug(&mut self, release: LevelFilter, debug: LevelFilter) -> &mut Self {
+    /// Sets different max [LevelFilter] of displayed messages depending on if this is an debug build or a release one.
+    pub fn max_level_debug(&mut self, release: LevelFilter, debug: LevelFilter) -> &mut Self {
         self.max_level = match cfg!(debug_assertions) {
             true => debug,
             false => release,
         };
         self
     }
-    /// Get max [LevelFilter]
-    pub fn max_level(&self) -> &LevelFilter {
+    /// Gets max [LevelFilter]. Any Message of Lower Priority will be igored
+    pub fn get_max_level(&self) -> &LevelFilter {
         &self.max_level
     }
-    /** Push Message to entries.
-    /
-    / Its recommended to use the built in macros instead:
-    / TODO: Reference macros here
+    /**
+    Pushes Message to entries.
+    Its recommended to use the built in macros instead:
+    - [log_error]
+    - [log_warn]
+    - [log_info]
+    - [log_debug]
+    - [log_trace]
     */
     pub fn push_message(&mut self, level: LevelFilter, msg: impl Into<String>) -> &mut Self {
-        self.entries.push(Message {
-            level,
-            message: msg.into(),
-        });
+        self.entries.push(Entry::new_message(level, msg.into()));
         self
     }
 }
