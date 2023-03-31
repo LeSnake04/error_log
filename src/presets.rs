@@ -36,6 +36,25 @@ impl<T, E> ErrorLog<T, E> {
     /// print errors using log::error
     pub fn print_fn_log_error(&mut self) -> &mut Self {
         self.print_fn = |e| error!("{e}");
+#[cfg(feature = "native-dialog")]
+impl<T, E: Debug + Display> ErrorLog<T, E> {
+    /// Display [crate::Entries] using [native_dialog::MessageDialog]
+    pub fn display_fn_native_dialog(&mut self) -> &mut Self {
+        self.display_fn = |lvl, e| {
+            if let Err(dialog_err) = native_dialog::MessageDialog::new()
+                .set_type(match lvl {
+                    LevelFilter::Off => return,
+                    LevelFilter::Error => MessageType::Error,
+                    LevelFilter::Warn => MessageType::Warning,
+                    _ => MessageType::Info,
+                })
+                .set_title(lvl.as_str())
+                .set_text(&e)
+                .show_alert()
+            {
+                println!("Failed to show Messagedialog: {}", dialog_err)
+            }
+        };
         self
     }
 }
