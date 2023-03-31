@@ -10,7 +10,7 @@ extern crate alloc;
 mod display;
 mod get;
 mod macros;
-mod manage_errors;
+mod manage;
 mod messages;
 mod presets;
 mod traits;
