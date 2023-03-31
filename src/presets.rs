@@ -24,6 +24,14 @@ impl<T: std::fmt::Debug> ErrorLog<T, anyhow::Error> {
     }
 }
 
+/**
+Pre-defined [ErrorLog] using `Box<dyn DebugDisplay>` as `E`
+Unlocks additional functions:
+- [merge_result_box()][Self::merge_result_box]
+- [push_result_box()][Self::push_result_box]
+- [push_err_box()][Self::push_err_box]
+*/
+pub type ErrorLogBox<T> = ErrorLog<T, Box<dyn DebugDisplay>>;
 impl<T, E> ErrorLog<T, E> {
     /// print errors using log::error
     pub fn print_fn_log_error(&mut self) -> &mut Self {

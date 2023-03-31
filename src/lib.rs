@@ -53,8 +53,7 @@ x:ErrorLog, E:Error, T:ok value, U:unrestricted type
 - `x *= `[Result]`<T, E>`: Shorthand for [merge_result()][Self::merge_result]
 */
 #[derive(Clone, PartialEq, Eq, PartialOrd, Ord, Debug)]
-pub struct ErrorLog<T, E = Box<dyn Debug>> {
-    display_mode: FormatMode,
+pub struct ErrorLog<T, E> {
     entries: Entries<E>,
     join: Option<String>,
     ok: Option<T>,
