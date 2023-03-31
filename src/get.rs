@@ -14,7 +14,7 @@ impl<T, E> ErrorLog<T, E> {
     }
     /// Get owned [Entries], Removing them from Instace
     pub fn entries_owned(&mut self) -> Entries<E> {
-        let mut out = vec![];
+        let mut out = Vec::new();
         out.append(&mut self.entries);
         self.filter_entries(&mut out);
         out
