@@ -73,6 +73,14 @@ macro_rules! instant_display_helper {
     };
 }
 pub(crate) use instant_display_helper;
+
+/**
+A trait Combining debug and display bounds
+*/
+pub trait DebugDisplay: Debug + Display {}
+
+impl<T: Debug + Display> DebugDisplay for T {}
+
 /**
 A Object to store multiple error messages and display them at once
 
