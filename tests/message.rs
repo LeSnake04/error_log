@@ -11,26 +11,11 @@ fn no_filter() {
     test_message(
         None,
         vec![
-            Entry::Message {
-                level: LevelFilter::Error,
-                message: String::from("error"),
-            },
-            Entry::Message {
-                level: LevelFilter::Warn,
-                message: String::from("warn"),
-            },
-            Entry::Message {
-                level: LevelFilter::Info,
-                message: String::from("info"),
-            },
-            Entry::Message {
-                level: LevelFilter::Debug,
-                message: String::from("debug"),
-            },
-            Entry::Message {
-                level: LevelFilter::Trace,
-                message: String::from("trace"),
-            },
+            Entry::new_message(LevelFilter::Error, String::from("error")),
+            Entry::new_message(LevelFilter::Warn, String::from("warn")),
+            Entry::new_message(LevelFilter::Info, String::from("info")),
+            Entry::new_message(LevelFilter::Debug, String::from("debug")),
+            Entry::new_message(LevelFilter::Trace, String::from("trace")),
         ],
     )
 }
@@ -39,14 +24,8 @@ fn messages_max_level() {
     test_message(
         Some(LevelFilter::Warn),
         vec![
-            Entry::Message {
-                level: LevelFilter::Error,
-                message: String::from("error"),
-            },
-            Entry::Message {
-                level: LevelFilter::Warn,
-                message: String::from("warn"),
-            },
+            Entry::new_message(LevelFilter::Error, String::from("error")),
+            Entry::new_message(LevelFilter::Warn, String::from("warn")),
         ],
     )
 }
