@@ -43,6 +43,37 @@ if_not_std! {
 /// Type alias for `Vec<Entry<E>>`
 pub type Entries<E> = Vec<Entry<E>>;
 
+macro_rules! instant_display_helper {
+    ($self: ident, $ret: ident, $entry: expr) => {
+        if $self.instant_display {
+            match $self.join {
+                true => $self.instant_display_helper(),
+                false => ($self.display_fn)(),
+            }
+            return $ret;
+        }
+    };
+    ($self: ident,e, $entry: expr) => {
+        if $self.instant_display {
+            match $self.join {
+                true => $self.instant_display_helper(),
+                false => ($self.display_fn)($entry.get_level(), $entry.as_string()),
+            }
+        }
+    };
+    ($self: ident, $ret: ident) => {
+        if $self.instant_display {
+            $self.instant_display_helper();
+            return $ret;
+        }
+    };
+    ($self: ident) => {
+        if $self.instant_display {
+            $self.instant_display_helper();
+        }
+    };
+}
+pub(crate) use instant_display_helper;
 /**
 A Object to store multiple error messages and display them at once
 
@@ -58,6 +89,7 @@ pub struct ErrorLog<T, E> {
     entries: Entries<E>,
     join: Option<String>,
     ok: Option<T>,
+    instant_display: bool,
     max_level: LevelFilter,
     print_fn: fn(String),
 }
