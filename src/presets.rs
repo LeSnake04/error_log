@@ -7,7 +7,7 @@ use log::{debug, error, info, trace, warn, LevelFilter};
 use {core::fmt::Display, native_dialog::MessageType};
 
 /**
-Pre-defined [ErrorLog][ErrorLog] Using [anyhow::Error]
+Pre-defined [ErrorLog] Using [anyhow::Error] as `E`
 
 Its suggested to use [new_anyhow()][crate::ErrorLog::new_anyhow] to load optimised settings.
 */
