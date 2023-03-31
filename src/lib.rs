@@ -8,6 +8,7 @@ Libary to store errors and log messages and display them later.
 */
 extern crate alloc;
 mod display;
+mod entry;
 mod get;
 mod macros;
 mod manage;
