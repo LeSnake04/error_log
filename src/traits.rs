@@ -12,7 +12,7 @@ if_std! {
 
 impl<T, E> IntoIterator for ErrorLog<T, E> {
     type Item = Entry<E>;
-    type IntoIter = std::vec::IntoIter<Self::Item>;
+    type IntoIter = IntoIter<Self::Item>;
     /// Iterates over Error stored.
     fn into_iter(self) -> Self::IntoIter {
         self.entries.into_iter()
@@ -36,6 +36,7 @@ impl<T: Debug, U, E: Debug + Display> AddAssign<Result<U, E>> for ErrorLog<T, E>
     }
 }
 
+#[cfg(feature = "std")]
 impl<T: Debug, E> Termination for ErrorLog<T, E> {
     fn report(self) -> std::process::ExitCode {
         use std::process::ExitCode;

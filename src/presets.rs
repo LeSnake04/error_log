@@ -15,7 +15,7 @@ Its suggested to use [new_anyhow()][crate::ErrorLog::new_anyhow] to load optimis
 pub type ErrorLogAnyhow<T> = ErrorLog<T, anyhow::Error>;
 #[cfg(feature = "anyhow")]
 /// Special methods for [ErrorLogAnyhow][crate::ErrorLogAnyhow]
-impl<T: std::fmt::Debug> ErrorLog<T, anyhow::Error> {
+impl<T: Debug> ErrorLog<T, anyhow::Error> {
     /// Creates a new [ErrorLog][crate::ErrorLog] and sets the PrintMode to Debug. Indented for best [anyhow] compatibilty
     pub fn new_anyhow() -> Self {
         let mut out = Self::new();

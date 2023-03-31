@@ -1,4 +1,5 @@
-use crate::{Entry::Message, ErrorLog};
+use crate::{Entry, ErrorLog};
+use alloc::string::String;
 use log::LevelFilter;
 
 #[macro_export]
