@@ -19,10 +19,11 @@ impl<T, E> ErrorLog<T, E> {
         self.filter_entries(&mut out);
         out
     }
+    /// Filter out entries below the max_level
     fn filter_entries(&self, entries: &mut Entries<E>) {
         entries.retain(|e| {
-            !matches!(e,
-                Entry::Message { level, .. } if level > self.max_level()
+            !matches!(e.content,
+                EntryContent::Message { level, .. } if level > self.max_level
             )
         });
     }
@@ -30,12 +31,9 @@ impl<T, E> ErrorLog<T, E> {
     pub fn messages_clone(&self) -> Entries<E> {
         let mut out = Entries::new();
         for ent in &self.entries {
-            if let Entry::Message { level, message } = ent {
+            if let EntryContent::Message { level, message } = &ent.content {
                 if level <= &self.max_level {
-                    out.push(Entry::Message {
-                        level: *level,
-                        message: message.clone(),
-                    })
+                    out.push(Entry::new_message(*level, message.clone()))
                 }
             }
         }
@@ -46,9 +44,9 @@ impl<T, E> ErrorLog<T, E> {
         let mut out = Entries::new();
         let mut entries = self.entries_owned();
         for i in entries.len()..0 {
-            if let Entry::Message { level, message } = entries.remove(i) {
+            if let EntryContent::Message { level, message } = entries.remove(i).content {
                 if level <= self.max_level {
-                    out.push(Entry::Message { level, message })
+                    out.push(Entry::new_message(level, message))
                 }
             }
         }
@@ -68,7 +66,7 @@ impl<T, E: Clone> ErrorLog<T, E> {
     pub fn errors_cloned(&self) -> Vec<E> {
         let mut out = Vec::new();
         for ent in &self.entries {
-            if let Entry::Error(err) = ent {
+            if let EntryContent::Error(err) = &ent.content {
                 out.push(err.clone())
             }
         }

@@ -93,45 +93,15 @@ x:ErrorLog, E:Error, T:ok value, U:unrestricted type
 */
 #[derive(Clone, PartialEq, Eq, PartialOrd, Ord, Debug)]
 pub struct ErrorLog<T, E> {
+    format_mode: FormatMode,
     entries: Entries<E>,
-    join: Option<String>,
-    ok: Option<T>,
     instant_display: bool,
+    delimiter: String,
+    join: bool,
     max_level: LevelFilter,
-    print_fn: fn(String),
-}
-
-#[derive(Debug, Eq, PartialEq, PartialOrd, Ord, Clone)]
-/// Entry containg an Error of type `E` or an MessageError
-pub enum Entry<E> {
-    /// An error of type E
-    Error(E),
-    /// A logging message
-    Message {
-        /// Level of message
-        level: LevelFilter,
-        /// Message Content
-        message: String,
-    },
-}
-
-impl<E: Debug + Display> Entry<E> {
-    fn as_string(&self, mode: &FormatMode, max_level: &LevelFilter) -> Option<String> {
-        match self {
-            Self::Error(err) => Some(match mode {
-                FormatMode::Normal => format!("{err}"),
-                FormatMode::Debug => format!("{err:?}"),
-                FormatMode::PrettyDebug => format!("{err:#?}"),
-            }),
-            Self::Message {
-                message: msg,
-                level,
-            } => match level <= max_level {
-                true => Some(msg.clone()),
-                false => None,
-            },
-        }
-    }
+    max_level_used: LevelFilter,
+    ok: Option<T>,
+    display_fn: fn(LevelFilter, String),
 }
 
 impl<T, E> Default for ErrorLog<T, E> {
