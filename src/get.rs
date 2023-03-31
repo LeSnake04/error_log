@@ -1,4 +1,5 @@
-use crate::{Entries, Entry, ErrorLog};
+use crate::{Entries, Entry, EntryContent, ErrorLog};
+use alloc::vec::Vec;
 
 impl<T, E> ErrorLog<T, E> {
     /// Get mutable reference to Vector of [Entries]

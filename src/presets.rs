@@ -1,6 +1,10 @@
-use log::error;
-
-use crate::ErrorLog;
+use crate::{DebugDisplay, ErrorLog};
+use alloc::boxed::Box;
+#[cfg(feature = "anyhow")]
+use core::fmt::Debug;
+use log::{debug, error, info, trace, warn, LevelFilter};
+#[cfg(feature = "native-dialog")]
+use {core::fmt::Display, native_dialog::MessageType};
 
 /**
 Pre-defined [ErrorLog][ErrorLog] Using [anyhow::Error]

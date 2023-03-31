@@ -1,10 +1,12 @@
 #![warn(clippy::all)]
 #![warn(missing_docs)]
 #![warn(rustdoc::all)]
+#![cfg_attr(not(feature = "std"), no_std)]
 /*!
 Libary to store errors and log messages and display them later.
 
 */
+extern crate alloc;
 mod display;
 mod get;
 mod macros;
@@ -13,10 +15,29 @@ mod messages;
 mod presets;
 mod traits;
 
+macro_rules! if_std {
+    ($($i:item)*) => ($(
+        #[cfg(feature = "std")] $i
+    )*)
+}
+macro_rules! if_not_std {
+    ($($i:item)*) => ($(
+        #[cfg(not(feature = "std"))] $i
+    )*)
+}
+use alloc::{fmt::Debug, string::String, vec::Vec};
+use core::fmt::Display;
+pub use entry::{Entry, EntryContent};
 pub use log::LevelFilter;
 pub use presets::*;
 
-use std::fmt::{Debug, Display};
+pub(crate) use {if_not_std, if_std};
+if_std! {
+    pub use std::{println, print};
+}
+if_not_std! {
+    pub use libc_print::std_name::{println};
+}
 
 /// Type alias for `Vec<Entry<E>>`
 pub type Entries<E> = Vec<Entry<E>>;

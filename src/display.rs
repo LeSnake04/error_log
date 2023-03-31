@@ -1,5 +1,7 @@
-use crate::{Entry::Error, ErrorLog, FormatMode};
-use std::fmt::{Debug, Display};
+use crate::{print, ErrorLog, FormatMode};
+use alloc::string::String;
+use core::fmt::{Debug, Display};
+use log::LevelFilter;
 
 impl<T: Debug, E: Display + Debug> ErrorLog<T, E> {
     fn display_helper(&self) {
