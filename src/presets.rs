@@ -26,16 +26,29 @@ impl<T: Debug> ErrorLog<T, anyhow::Error> {
 
 /**
 Pre-defined [ErrorLog] using `Box<dyn DebugDisplay>` as `E`
+
 Unlocks additional functions:
 - [merge_result_box()][Self::merge_result_box]
 - [push_result_box()][Self::push_result_box]
 - [push_err_box()][Self::push_err_box]
 */
 pub type ErrorLogBox<T> = ErrorLog<T, Box<dyn DebugDisplay>>;
+
 impl<T, E> ErrorLog<T, E> {
-    /// print errors using log::error
-    pub fn print_fn_log_error(&mut self) -> &mut Self {
-        self.print_fn = |e| error!("{e}");
+    /// Display errors using [println]
+    pub fn display_fn_println(&mut self) -> &mut Self {
+        self.display_fn = |level, e| match level {
+            LevelFilter::Off => (),
+            LevelFilter::Error => error!("{e}"),
+            LevelFilter::Warn => warn!("{e}"),
+            LevelFilter::Info => info!("{e}"),
+            LevelFilter::Debug => debug!("{e}"),
+            LevelFilter::Trace => trace!("{e}"),
+        };
+        self
+    }
+}
+
 #[cfg(feature = "native-dialog")]
 impl<T, E: Debug + Display> ErrorLog<T, E> {
     /// Display [crate::Entries] using [native_dialog::MessageDialog]
