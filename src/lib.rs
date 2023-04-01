@@ -37,7 +37,7 @@ if_std! {
     pub use std::{println, print};
 }
 if_not_std! {
-    pub use libc_print::std_name::{println};
+    pub use libc_print::std_name::{println, print};
 }
 
 /// Type alias for `Vec<Entry<E>>`
