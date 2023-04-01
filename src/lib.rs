@@ -1,4 +1,5 @@
 #![cfg_attr(not(feature = "std"), no_std)]
+#![forbid(unsafe_code)]
 #![warn(clippy::all, rustdoc::all, missing_docs)]
 /*!
 Libary to store errors and log messages and display them later.
