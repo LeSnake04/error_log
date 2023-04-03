@@ -1,9 +1,9 @@
-use crate::FormatMode;
+use crate::{now, FormatMode};
+use alloc::{format, string::String};
+use core::cell::RefCell;
+use core::fmt::{Debug, Display};
 use log::LevelFilter;
-use {
-    alloc::{format, string::String},
-    core::fmt::{Debug, Display},
-};
+
 /// Type alias for `Vec<Entry<E>>`
 pub type Entries<E> = Vec<Entry<E>>;
 
