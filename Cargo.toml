@@ -28,9 +28,6 @@ members = [
   "examples/*"
 ]
 
-[package.metadata.spellcheck]
-config = "spellcheck.toml"
-
 [dev-dependencies]
 anyhow = "1.0.70"
 env_logger = "0.10.0"
