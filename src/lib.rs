@@ -29,12 +29,12 @@ macro_rules! if_not_std {
     )*)
 }
 
+pub use crate::entry::{Entries, Entry, EntryContent};
 use crate::helper::{format_unix_timestamp, instant_display_helper, now};
+pub use crate::presets::*;
 use alloc::{fmt::Debug, string::String, vec::Vec};
 use core::fmt::Display;
-pub use entry::{Entry, EntryContent};
 pub use log::LevelFilter;
-pub use presets::*;
 pub(crate) use {if_not_std, if_std};
 if_std! {
     pub use std::{println, print};
