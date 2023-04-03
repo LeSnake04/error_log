@@ -88,7 +88,7 @@ impl<T, E> ErrorLog<T, E> {
         self.ok.take()
     }
     /// Get display function
-    pub fn display_fn(&self) -> fn(LevelFilter, String) {
+    pub fn display_fn(&self) -> fn(LevelFilter, i64, String) {
         self.display_fn
     }
     /// Set ok value. Takes any value that can be converted to String
@@ -102,7 +102,7 @@ impl<T, E> ErrorLog<T, E> {
         self
     }
     /// Set print function
-    pub fn set_print_fn(&mut self, fun: fn(LevelFilter, String)) -> &mut Self {
+    pub fn set_print_fn(&mut self, fun: fn(LevelFilter, i64, String)) -> &mut Self {
         self.display_fn = fun;
         self
     }

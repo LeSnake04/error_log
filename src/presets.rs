@@ -1,4 +1,4 @@
-use crate::{DebugDisplay, ErrorLog};
+use crate::{format_unix_timestamp, DebugDisplay, ErrorLog};
 use alloc::boxed::Box;
 #[cfg(feature = "anyhow")]
 use core::fmt::Debug;
@@ -35,16 +35,24 @@ Unlocks additional functions:
 pub type ErrorLogBox<T> = ErrorLog<T, Box<dyn DebugDisplay>>;
 
 impl<T, E> ErrorLog<T, E> {
+    /// Display entries using [log] macros
+    pub fn display_fn_log(&mut self) -> &mut Self {
+        self.display_fn = |level, unix, e| {
+            let ts = format_unix_timestamp(unix);
+            match level {
+                LevelFilter::Off => (),
+                LevelFilter::Error => error!("{ts} {e}"),
+                LevelFilter::Warn => warn!("{ts} {e}"),
+                LevelFilter::Info => info!("{ts} {e}"),
+                LevelFilter::Debug => debug!("{ts} {e}"),
+                LevelFilter::Trace => trace!("{ts} {e}"),
+            }
+        };
+        self
+    }
     /// Display errors using [println]
     pub fn display_fn_println(&mut self) -> &mut Self {
-        self.display_fn = |level, e| match level {
-            LevelFilter::Off => (),
-            LevelFilter::Error => error!("{e}"),
-            LevelFilter::Warn => warn!("{e}"),
-            LevelFilter::Info => info!("{e}"),
-            LevelFilter::Debug => debug!("{e}"),
-            LevelFilter::Trace => trace!("{e}"),
-        };
+        self.display_fn = Self::default().display_fn;
         self
     }
 }

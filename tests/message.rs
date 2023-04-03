@@ -40,6 +40,9 @@ fn test_message(max_level: Option<LevelFilter>, expected: Entries<ParseIntError>
     log_info!(err_log, "info");
     log_debug!(err_log, "debug");
     log_trace!(err_log, "trace");
-    assert_eq!(err_log.entries_cloned(), expected);
+    assert_eq!(
+        expected.clear_timestamps(),
+        err_log.entries_cloned().clear_timestamps()
+    );
     assert!(err_log.display_ok().is_none());
 }

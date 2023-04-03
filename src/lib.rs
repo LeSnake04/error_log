@@ -70,7 +70,7 @@ pub struct ErrorLog<T, E> {
     max_level: LevelFilter,
     max_level_used: LevelFilter,
     ok: Option<T>,
-    display_fn: fn(LevelFilter, String),
+    display_fn: fn(LevelFilter, i64, String),
 }
 
 impl<T, E> Default for ErrorLog<T, E> {
@@ -79,7 +79,9 @@ impl<T, E> Default for ErrorLog<T, E> {
             ok: None,
             entries: Vec::new(),
             format_mode: FormatMode::default(),
-            display_fn: |lvl, e| println!("{lvl}: {e}"),
+            display_fn: |lvl, timestamp, e| {
+                println!("{lvl} {}: {e}", format_unix_timestamp(timestamp))
+            },
             max_level: LevelFilter::Trace,
             delimiter: "".into(),
             join: false,

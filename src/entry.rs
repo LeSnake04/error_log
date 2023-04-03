@@ -4,6 +4,25 @@ use {
     alloc::{format, string::String},
     core::fmt::{Debug, Display},
 };
+/// Type alias for `Vec<Entry<E>>`
+pub type Entries<E> = Vec<Entry<E>>;
+
+/// Additional functions for [Entries]
+pub trait EntriesExt {
+    /// Sets all timestamps to 0
+    ///
+    /// Useful for removing variation in tests involving [assert_eq]/[assert_ne]
+    fn clear_timestamps(self) -> Self;
+}
+
+impl<E> EntriesExt for Entries<E> {
+    fn clear_timestamps(mut self) -> Entries<E> {
+        for entry in &mut self {
+            entry.timestamp = 0;
+        }
+        self
+    }
+}
 
 #[derive(Debug, Eq, PartialEq, PartialOrd, Ord, Clone)]
 /// Entry containg an Error of type `E` or an MessageError
@@ -32,12 +51,6 @@ impl<E> Entry<E> {
     fn new(content: EntryContent<E>) -> Self {
         Self {
             content,
-            #[cfg(feature = "std")]
-            timestamp: time::OffsetDateTime::now_local()
-                .map(|t| t.unix_timestamp())
-                .unwrap_or(0),
-            #[cfg(not(feature = "std"))]
-            timestamp: 0,
             instant_display_displayed: false,
         }
     }
