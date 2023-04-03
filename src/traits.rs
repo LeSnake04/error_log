@@ -1,13 +1,12 @@
 use crate::{if_std, Entry, ErrorLog};
-use {
-    alloc::vec::IntoIter,
-    core::{
-        fmt::{Debug, Display},
-        ops::{AddAssign, Deref, DerefMut, MulAssign},
-    },
+use alloc::vec::IntoIter;
+#[cfg(feature = "helper-traits")]
+use core::{
+    fmt::Display,
+    ops::{AddAssign, Deref, DerefMut, MulAssign},
 };
 if_std! {
-    use std::process::Termination;
+    use {std::process::Termination, core::fmt::Debug};
 }
 
 impl<T, E> IntoIterator for ErrorLog<T, E> {
@@ -18,8 +17,10 @@ impl<T, E> IntoIterator for ErrorLog<T, E> {
         self.entries.into_iter()
     }
 }
+
+#[cfg(feature = "helper-traits")]
 impl<T, E: Debug + Display> AddAssign<E> for ErrorLog<T, E> {
-    /// Make `err_log += ERROR` store error of [Result] if any.
+    /// Make `err_log += ERROR` store error if [Result] if an [Err].
     ///
     /// Shorthand for [push_err()][crate::ErrorLog::push_err]
     fn add_assign(&mut self, rhs: E) {
@@ -27,7 +28,8 @@ impl<T, E: Debug + Display> AddAssign<E> for ErrorLog<T, E> {
     }
 }
 
-impl<T: Debug, U, E: Debug + Display> AddAssign<Result<U, E>> for ErrorLog<T, E> {
+#[cfg(feature = "helper-traits")]
+impl<T, U, E: Debug + Display> AddAssign<Result<U, E>> for ErrorLog<T, E> {
     /// Make `err_log += RESULT` store error of [Result] if any.
     ///
     /// Shorthand for [push_result()][crate::ErrorLog::push_result]
@@ -37,7 +39,7 @@ impl<T: Debug, U, E: Debug + Display> AddAssign<Result<U, E>> for ErrorLog<T, E>
 }
 
 #[cfg(feature = "std")]
-impl<T: Debug, E> Termination for ErrorLog<T, E> {
+impl<T, E> Termination for ErrorLog<T, E> {
     fn report(self) -> std::process::ExitCode {
         use std::process::ExitCode;
         match self.ok.is_some() {
@@ -47,15 +49,15 @@ impl<T: Debug, E> Termination for ErrorLog<T, E> {
     }
 }
 
-impl<T: Debug, U: Into<T>, E: Debug + Display, F: Into<E>> MulAssign<Result<U, F>>
-    for ErrorLog<T, E>
-{
+#[cfg(feature = "helper-traits")]
+impl<T, U: Into<T>, E: Debug + Display, F: Into<E>> MulAssign<Result<U, F>> for ErrorLog<T, E> {
     fn mul_assign(&mut self, rhs: Result<U, F>) {
         self.merge_result(rhs);
     }
 }
 
-impl<T: Debug, U: Into<T>, E> MulAssign<Option<U>> for ErrorLog<T, E> {
+#[cfg(feature = "helper-traits")]
+impl<T, U: Into<T>, E> MulAssign<Option<U>> for ErrorLog<T, E> {
     fn mul_assign(&mut self, rhs: Option<U>) {
         if let Some(val) = rhs {
             self.set_ok(val.into());
@@ -69,16 +71,18 @@ impl<T: Debug, U: Into<T>, E> MulAssign<Option<U>> for ErrorLog<T, E> {
 //     }
 // }
 
+#[cfg(feature = "helper-traits")]
 /// Get immutable 'ok' value as [Option] by dereferencing
-impl<T: Debug, E> Deref for ErrorLog<T, E> {
+impl<T, E> Deref for ErrorLog<T, E> {
     type Target = Option<T>;
     fn deref(&self) -> &Self::Target {
         self.ok()
     }
 }
 
+#[cfg(feature = "helper-traits")]
 /// Get mutable 'ok' value as [Option] by dereferencing
-impl<T: Debug, E> DerefMut for ErrorLog<T, E> {
+impl<T, E> DerefMut for ErrorLog<T, E> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         self.ok_mut()
     }
