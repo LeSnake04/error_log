@@ -73,7 +73,7 @@ impl<T, E: Debug + Display> ErrorLog<T, E> {
                 .set_text(&e)
                 .show_alert()
             {
-                println!("Failed to show Messagedialog: {}", dialog_err)
+                println!("Failed to show MessageDialog: {}", dialog_err)
             }
         };
         self
