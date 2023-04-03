@@ -16,6 +16,7 @@ libc-print = "0.1.21"
 [features]
 default =["std"]
 std = ["time"]
+instant-display = []
 native-dialog = ["dep:native-dialog","std"]
 
 [workspace]

@@ -64,6 +64,7 @@ x:ErrorLog, E:Error, T:ok value, U:unrestricted type
 pub struct ErrorLog<T, E> {
     format_mode: FormatMode,
     entries: Entries<E>,
+    #[cfg(feature = "instant-display")]
     instant_display: bool,
     delimiter: String,
     join: bool,
@@ -86,6 +87,7 @@ impl<T, E> Default for ErrorLog<T, E> {
             delimiter: "".into(),
             join: false,
             max_level_used: LevelFilter::Off,
+            #[cfg(feature = "instant-display")]
             instant_display: false,
         }
     }

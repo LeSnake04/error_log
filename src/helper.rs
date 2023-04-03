@@ -23,6 +23,7 @@ pub fn format_unix_timestamp(unix: i64) -> String {
 
 macro_rules! instant_display_helper {
     ($self: ident, $ret: ident, $entry: expr) => {
+        #[cfg(feature = "instant-display")]
         if $self.instant_display {
             match $self.join {
                 true => $self.instant_display_helper(),
@@ -32,6 +33,7 @@ macro_rules! instant_display_helper {
         }
     };
     ($self: ident,e, $entry: expr) => {
+        #[cfg(feature = "instant-display")]
         if $self.instant_display {
             match $self.join {
                 true => $self.instant_display_helper(),
@@ -40,12 +42,14 @@ macro_rules! instant_display_helper {
         }
     };
     ($self: ident, $ret: ident) => {
+        #[cfg(feature = "instant-display")]
         if $self.instant_display {
             $self.instant_display_helper();
             return $ret;
         }
     };
     ($self: ident) => {
+        #[cfg(feature = "instant-display")]
         if $self.instant_display {
             $self.instant_display_helper();
         }

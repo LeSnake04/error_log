@@ -22,7 +22,6 @@ impl<T, E: Debug + Display> ErrorLog<T, E> {
     ) -> ErrorLog<U, F> {
         fun(self)
     }
-
     /// Stores [Ok] value from Result or push  [Err] from [Result] to entries  
     pub fn merge_result<U: Into<T>, F: Into<E>>(&mut self, res: Result<U, F>) -> bool {
         let out = res.is_ok();
