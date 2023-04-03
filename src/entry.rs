@@ -11,7 +11,7 @@ pub type Entries<E> = Vec<Entry<E>>;
 pub trait EntriesExt {
     /// Sets all timestamps to 0
     ///
-    /// Useful for removing variation in tests involving [`assert_eq`]/[assert_ne]
+    /// Useful for removing variation in tests involving [`assert_eq`]/[`assert_ne`]
     fn clear_timestamps(self) -> Self;
 }
 
@@ -25,11 +25,11 @@ impl<E> EntriesExt for Entries<E> {
 }
 
 #[derive(Debug, Eq, PartialEq, PartialOrd, Ord, Clone)]
-/// Entry containg an Error of type `E` or an MessageError
+/// Entry containing an Error of type `E` or an log message
 pub struct Entry<E> {
     /// Content of the entry
     pub content: EntryContent<E>,
-    /// Timestamp when the event occured
+    /// Timestamp when the event occurred
     pub timestamp: i64,
     pub(crate) instant_display_displayed: RefCell<bool>,
 }
@@ -49,7 +49,7 @@ pub enum EntryContent<E> {
 
 impl<E> Entry<E> {
     /// Get level
-    /// Reurns [`LevelFilter::Error`] or the level of the Message
+    /// Returns [`LevelFilter::Error`] or the level of the Message
     pub fn get_level(&self) -> LevelFilter {
         match self.content {
             EntryContent::Error(_) => LevelFilter::Error,
@@ -80,7 +80,7 @@ impl<E: Debug + Display> Entry<E> {
             None => unreachable!("No Message should get filtered."),
         }
     }
-    /// Get Message as String fitering based on given [`LevelFilter`]
+    /// Get Message as String filtering based on given [`LevelFilter`]
     pub fn get_message_filter(&self, mode: &FormatMode, max_level: &LevelFilter) -> Option<String> {
         match &self.content {
             EntryContent::Error(err) => Some(match mode {

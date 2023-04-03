@@ -81,7 +81,7 @@ macro_rules! return_err {
 
 #[macro_export]
 /**
-Set ok value of given [`ErrorLog`][crate::ErrorLog] and return it
+Set `ok` value of given [`ErrorLog`][crate::ErrorLog] and return it
 
 Arguments:
 1. err value

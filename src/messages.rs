@@ -53,7 +53,7 @@ impl<T, E> ErrorLog<T, E> {
         };
         self
     }
-    /// Gets max [`LevelFilter`]. Any Message of Lower Priority will be igored
+    /// Gets max [`LevelFilter`]. Any Message of Lower Priority will be ignored
     pub fn get_max_level(&self) -> &LevelFilter {
         &self.max_level
     }

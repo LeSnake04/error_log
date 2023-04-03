@@ -15,7 +15,7 @@ impl<T, E: Debug + Display> ErrorLog<T, E> {
         self.entries.clear();
         self
     }
-    /// Maps instance to change error and ok type
+    /// Maps instance to change error and `ok` type
     pub fn map_error_log<U: Debug, F: Display>(
         self,
         fun: impl FnOnce(Self) -> ErrorLog<U, F>,
@@ -36,7 +36,7 @@ impl<T, E: Debug + Display> ErrorLog<T, E> {
         };
         out
     }
-    /// Appends Entries before the Entries of the current Vec
+    /// Appends Entries before the Entries of the current `Vec`
     pub fn prepend_entries<U>(&mut self, other: &mut ErrorLog<U, E>) -> &mut Self {
         let mut entries = Vec::new();
         entries.append(&mut other.entries);
@@ -52,7 +52,7 @@ impl<T, E: Debug + Display> ErrorLog<T, E> {
         self
     }
     /// Push error of result to entries.
-    /// Returns Ok value of give result as Option
+    /// Returns `Ok` value of give result as Option
     pub fn push_result<U, F: Into<E>>(&mut self, res: Result<U, F>) -> Option<U> {
         match res {
             Ok(o) => Some(o),
@@ -78,11 +78,11 @@ impl<T, E> ErrorLog<T, E> {
     pub fn ok_discard_err(self) -> Option<T> {
         self.ok
     }
-    /// Get mutable referec eto ok value
+    /// Get mutable reference to `ok` value
     pub fn ok_mut(&mut self) -> &mut Option<T> {
         &mut self.ok
     }
-    /// Take ok value
+    /// Take `ok` value
     pub fn ok_take(&mut self) -> Option<T> {
         self.ok.take()
     }
@@ -90,7 +90,7 @@ impl<T, E> ErrorLog<T, E> {
     pub fn display_fn(&self) -> fn(LevelFilter, i64, String) {
         self.display_fn
     }
-    /// Set ok value. Takes any value that can be converted to String
+    /// Set `ok` value. Takes any value that can be converted to String
     pub fn set_ok(&mut self, new: impl Into<T>) -> &mut Self {
         self.ok = Some(new.into());
         self
@@ -108,7 +108,7 @@ impl<T, E> ErrorLog<T, E> {
 }
 
 impl<T> ErrorLog<T, Box<dyn DebugDisplay>> {
-    /// If the Result is an Ok variant, store ok value.
+    /// If the Result is an Ok variant, store `ok` value.
     /// If the Result is an Err variant, store the Error as Box
     pub fn merge_result_box<U: Into<T>, F: DebugDisplay + 'static>(
         &mut self,
@@ -131,7 +131,7 @@ impl<T> ErrorLog<T, Box<dyn DebugDisplay>> {
         self
     }
     /// If the Result contains an error, put error in a [`Box`] and store it.
-    /// Returns Ok value of given [`Result`] as [`Option`]
+    /// Returns `Ok` value of given [`Result`] as [`Option`]
     pub fn push_result_box<U: Into<T>, F: DebugDisplay + 'static>(
         &mut self,
         res: Result<U, F>,

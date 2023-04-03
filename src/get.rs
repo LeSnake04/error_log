@@ -2,7 +2,7 @@ use crate::{Entries, Entry, EntryContent, ErrorLog};
 use alloc::vec::Vec;
 
 impl<T, E> ErrorLog<T, E> {
-    /// Get immmutable reference to Vector of [`Entries`]
+    /// Get immutable reference to Vector of [`Entries`]
     /// NOTE: Does not filter entries
     pub fn entries(&self) -> &Entries<E> {
         &self.entries
@@ -12,14 +12,14 @@ impl<T, E> ErrorLog<T, E> {
     pub fn entries_mut(&mut self) -> &mut Entries<E> {
         &mut self.entries
     }
-    /// Get owned [`Entries`], Removing them from Instace
+    /// Get owned [`Entries`], Removing them from Instance
     pub fn entries_owned(&mut self) -> Entries<E> {
         let mut out = Vec::new();
         out.append(&mut self.entries);
         self.filter_entries(&mut out);
         out
     }
-    /// Filter out entries below the max_level
+    /// Filter out entries below the `max_level`
     fn filter_entries(&self, entries: &mut Entries<E>) {
         entries.retain(|e| {
             !matches!(e.content,

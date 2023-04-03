@@ -6,7 +6,7 @@ use core::fmt::{Debug, Display};
 use log::LevelFilter;
 
 impl<T, E> ErrorLog<T, E> {
-    /// Reset delimiter tu default value.
+    /// Reset delimiter to default value.
     pub fn clear_delimiter(&mut self) -> &mut Self {
         self.delimiter = "".into();
         self
@@ -18,7 +18,7 @@ impl<T, E> ErrorLog<T, E> {
     /// Set how the errors should be formatted:
     /// - Normal: `{}` (Default)
     /// - Debug: `{:?}`
-    /// - PrettyDebug: `{:#?}`
+    /// - `PrettyDebug`: `{:#?}`
     pub fn display_mode(&mut self, mode: FormatMode) -> &mut Self {
         self.format_mode = mode;
         self
@@ -28,7 +28,7 @@ impl<T, E> ErrorLog<T, E> {
         &self.format_mode
     }
     #[cfg(feature = "instant-display")]
-    /// Get weighther the function display incoming entries instantly.
+    /// Get weightier the function display incoming entries instantly.
     /// Note: Entries wont get stored when true
     pub fn get_instant_display(&self) -> bool {
         self.instant_display
@@ -42,13 +42,13 @@ impl<T, E> ErrorLog<T, E> {
         self.entries[i].timestamp
     }
     #[cfg(feature = "instant-display")]
-    /// Set weighther the function display incoming entries instantly.
+    /// Set weightier the function display incoming entries instantly.
     /// Note: Entries wont get stored when true
     pub fn instant_display(&mut self, val: bool) -> &mut Self {
         self.instant_display = val;
         self
     }
-    /// Set weighter to join [`Entries`] into one big String when displaying them.
+    /// Set weightier to join [`Entries`] into one big String when displaying them.
     pub fn join_on_display(&mut self, join: bool) -> &mut Self {
         self.join = join;
         self
@@ -89,45 +89,45 @@ impl<T, E: Display + Debug> ErrorLog<T, E> {
             }
         }
     }
-    /// Displays [`Entries`] and returns [`Option`] to mutable reference of ok value
+    /// Displays [`Entries`] and returns [`Option`] to mutable reference of `ok` value
     pub fn display_mut(&mut self) -> Option<&mut T> {
         self.display_helper();
         self.ok.as_mut()
     }
-    /// Displays [`Entries`] and returns ok value as [`Option`]
+    /// Displays [`Entries`] and returns `ok` value as [`Option`]
     pub fn display_ok(self) -> Option<T> {
         self.display_helper();
         self.ok
     }
-    /// Displays [`Entries`] and returns [`Option`] to reference of ok value
+    /// Displays [`Entries`] and returns [`Option`] to reference of `ok` value
     pub fn display_ref(&self) -> Option<&T> {
         self.display_helper();
         self.ok.as_ref()
     }
-    /// Display [`Entries`] and [`take`][Option::take] ok value from [`Option`]
+    /// Display [`Entries`] and [`take`][Option::take] `ok` value from [`Option`]
     pub fn display_take(&mut self) -> Option<T> {
         self.display_helper();
         self.ok.take()
     }
-    /// Display [`Entries`] and get ok value, panicing if no value set.
+    /// Display [`Entries`] and get `ok` value, panicking if no value set.
     ///
     /// Related: [`display_ok()`][Self::display_ok]
     pub fn display_take_unwrap(&mut self) -> T {
         self.display_take().expect("No Ok value")
     }
-    /// Displays [`Entries`] and get ok value, panicing if no value set.
+    /// Displays [`Entries`] and get `ok` value, panicking if no value set.
     ///
     /// Related: [`display_ok()`][Self::display_ok]
     pub fn display_unwrap(self) -> T {
         self.display_ok().expect("No Ok value")
     }
-    /// Display entries and get ok value, using given value if no value set
+    /// Display entries and get `ok` value, using given value if no value set
     ///
-    /// Its recommeded to use [`display_unwrap_or_else()`][Self::display_unwrap_or_else] when the alternative value needs to be calculated
+    /// Its recommended to use [`display_unwrap_or_else()`][Self::display_unwrap_or_else] when the alternative value needs to be calculated
     pub fn display_unwrap_or(self, or: T) -> T {
         self.display_ok().unwrap_or(or)
     }
-    /// Display entries and get ok value, using default value if no value set
+    /// Display entries and get `ok` value, using default value if no value set
     pub fn display_unwrap_or_default(self) -> T
     where
         T: Default,
@@ -135,7 +135,7 @@ impl<T, E: Display + Debug> ErrorLog<T, E> {
         self.display_helper();
         self.ok.unwrap_or_default()
     }
-    /// Display entries and get ok value, using value calculated from given closure
+    /// Display entries and get `ok` value, using value calculated from given closure
     ///
     /// Related: [`display_unwrap_or()`][Self::display_unwrap_or]
     pub fn display_unwrap_or_else(self, run: impl FnOnce() -> T) -> T {

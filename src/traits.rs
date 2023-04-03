@@ -72,7 +72,7 @@ impl<T, U: Into<T>, E> MulAssign<Option<U>> for ErrorLog<T, E> {
 // }
 
 #[cfg(feature = "helper-traits")]
-/// Get immutable 'ok' value as [`Option`] by dereferencing
+/// Get immutable '`ok`' value as [`Option`] by dereferencing
 impl<T, E> Deref for ErrorLog<T, E> {
     type Target = Option<T>;
     fn deref(&self) -> &Self::Target {
@@ -81,7 +81,7 @@ impl<T, E> Deref for ErrorLog<T, E> {
 }
 
 #[cfg(feature = "helper-traits")]
-/// Get mutable 'ok' value as [`Option`] by dereferencing
+/// Get mutable '`ok`' value as [`Option`] by dereferencing
 impl<T, E> DerefMut for ErrorLog<T, E> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         self.ok_mut()
