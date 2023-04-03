@@ -3,7 +3,8 @@ use pretty_assertions::assert_eq;
 use std::num::ParseIntError;
 
 use error_log::{
-    log_debug, log_error, log_info, log_trace, log_warn, Entries, Entry, ErrorLog, LevelFilter,
+    log_debug, log_error, log_info, log_trace, log_warn, Entries, EntriesExt, Entry, ErrorLog,
+    LevelFilter,
 };
 
 #[test]

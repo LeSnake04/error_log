@@ -29,7 +29,7 @@ macro_rules! if_not_std {
     )*)
 }
 
-pub use crate::entry::{Entries, Entry, EntryContent};
+pub use crate::entry::{Entries, EntriesExt, Entry, EntryContent};
 use crate::helper::{format_unix_timestamp, instant_display_helper, now};
 pub use crate::presets::*;
 use alloc::{fmt::Debug, string::String, vec::Vec};
