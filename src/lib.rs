@@ -11,6 +11,7 @@ extern crate alloc;
 mod display;
 mod entry;
 mod get;
+mod helper;
 mod macros;
 mod manage;
 mod messages;
@@ -27,6 +28,8 @@ macro_rules! if_not_std {
         #[cfg(not(feature = "std"))] $i
     )*)
 }
+
+use crate::helper::{format_unix_timestamp, instant_display_helper, now};
 use alloc::{fmt::Debug, string::String, vec::Vec};
 use core::fmt::Display;
 pub use entry::{Entry, EntryContent};
@@ -39,41 +42,6 @@ if_std! {
 if_not_std! {
     pub use libc_print::std_name::{println, print};
 }
-
-/// Type alias for `Vec<Entry<E>>`
-pub type Entries<E> = Vec<Entry<E>>;
-
-macro_rules! instant_display_helper {
-    ($self: ident, $ret: ident, $entry: expr) => {
-        if $self.instant_display {
-            match $self.join {
-                true => $self.instant_display_helper(),
-                false => ($self.display_fn)(),
-            }
-            return $ret;
-        }
-    };
-    ($self: ident,e, $entry: expr) => {
-        if $self.instant_display {
-            match $self.join {
-                true => $self.instant_display_helper(),
-                false => ($self.display_fn)($entry.get_level(), $entry.as_string()),
-            }
-        }
-    };
-    ($self: ident, $ret: ident) => {
-        if $self.instant_display {
-            $self.instant_display_helper();
-            return $ret;
-        }
-    };
-    ($self: ident) => {
-        if $self.instant_display {
-            $self.instant_display_helper();
-        }
-    };
-}
-pub(crate) use instant_display_helper;
 
 /**
 A trait Combining debug and display bounds
