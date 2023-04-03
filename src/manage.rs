@@ -10,7 +10,7 @@ impl<T, E: Debug + Display> ErrorLog<T, E> {
         self.entries.append(&mut other.entries);
         self
     }
-    /// Removes all entries from [Self].
+    /// Removes all entries from [`Self`].
     pub fn clear_entries(&mut self) -> &mut Self {
         self.entries.clear();
         self
@@ -22,7 +22,7 @@ impl<T, E: Debug + Display> ErrorLog<T, E> {
     ) -> ErrorLog<U, F> {
         fun(self)
     }
-    /// Stores [Ok] value from Result or push  [Err] from [Result] to entries  
+    /// Stores [`Ok`] value from Result or push  [`Err`] from [`Result`] to entries  
     pub fn merge_result<U: Into<T>, F: Into<E>>(&mut self, res: Result<U, F>) -> bool {
         let out = res.is_ok();
         match res {
@@ -74,7 +74,7 @@ impl<T, E> ErrorLog<T, E> {
         &self.ok
     }
     /// Get owned `ok` value, discarding all errors.
-    /// Related: [display_ok()][Self::display_ok]
+    /// Related: [`display_ok()`][Self::display_ok]
     pub fn ok_discard_err(self) -> Option<T> {
         self.ok
     }
@@ -125,13 +125,13 @@ impl<T> ErrorLog<T, Box<dyn DebugDisplay>> {
             }
         }
     }
-    /// Puts error in a [Box] and stores it
+    /// Puts error in a [`Box`] and stores it
     pub fn push_err_box(&mut self, err: impl DebugDisplay + 'static) -> &mut Self {
         self.entries.push(Entry::new_error(Box::new(err)));
         self
     }
-    /// If the Result contains an error, put error in a [Box] and store it.
-    /// Returns Ok value of given [Result] as [Option]
+    /// If the Result contains an error, put error in a [`Box`] and store it.
+    /// Returns Ok value of given [`Result`] as [`Option`]
     pub fn push_result_box<U: Into<T>, F: DebugDisplay + 'static>(
         &mut self,
         res: Result<U, F>,

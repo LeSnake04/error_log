@@ -89,7 +89,7 @@ impl<T, E: Display + Debug> ErrorLog<T, E> {
             }
         }
     }
-    /// Displays [`Entries`] and returns [Option] to mutable reference of ok value
+    /// Displays [`Entries`] and returns [`Option`] to mutable reference of ok value
     pub fn display_mut(&mut self) -> Option<&mut T> {
         self.display_helper();
         self.ok.as_mut()
@@ -104,14 +104,14 @@ impl<T, E: Display + Debug> ErrorLog<T, E> {
         self.display_helper();
         self.ok.as_ref()
     }
-    /// Display [`Entries`] and [take][Option::take] ok value from [Option]
+    /// Display [`Entries`] and [`take`][Option::take] ok value from [`Option`]
     pub fn display_take(&mut self) -> Option<T> {
         self.display_helper();
         self.ok.take()
     }
     /// Display [`Entries`] and get ok value, panicing if no value set.
     ///
-    /// Related: [display_ok()][Self::display_ok]
+    /// Related: [`display_ok()`][Self::display_ok]
     pub fn display_take_unwrap(&mut self) -> T {
         self.display_take().expect("No Ok value")
     }
@@ -147,7 +147,7 @@ impl<T, E: Display + Debug> ErrorLog<T, E> {
         self.entries[i].get_message_filter(self.get_format_mode(), &self.max_level)
     }
     #[cfg(feature = "instant-display")]
-    /// Displays all [crate::Entries]
+    /// Displays all [`crate::Entries`]
     pub(crate) fn instant_display_helper(&self) {
         match self.join {
             true => {

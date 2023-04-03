@@ -7,16 +7,16 @@ use log::{debug, error, info, trace, warn, LevelFilter};
 use {core::fmt::Display, native_dialog::MessageType};
 
 /**
-Pre-defined [ErrorLog] Using [anyhow::Error] as `E`
+Pre-defined [`ErrorLog`] Using [`anyhow::Error`] as `E`
 
-Its suggested to use [new_anyhow()][crate::ErrorLog::new_anyhow] to load optimised settings.
+Its suggested to use [`new_anyhow()`][crate::ErrorLog::new_anyhow] to load optimised settings.
 */
 #[cfg(feature = "anyhow")]
 pub type ErrorLogAnyhow<T> = ErrorLog<T, anyhow::Error>;
 #[cfg(feature = "anyhow")]
-/// Special methods for [ErrorLogAnyhow][crate::ErrorLogAnyhow]
+/// Special methods for [`ErrorLogAnyhow`][crate::ErrorLogAnyhow]
 impl<T: Debug> ErrorLog<T, anyhow::Error> {
-    /// Creates a new [ErrorLog][crate::ErrorLog] and sets the PrintMode to Debug. Indented for best [anyhow] compatibilty
+    /// Creates a new [`ErrorLog`][crate::ErrorLog] and sets the PrintMode to Debug. Indented for best [`anyhow`] compatibilty
     pub fn new_anyhow() -> Self {
         let mut out = Self::new();
         out.display_mode(crate::FormatMode::Debug);
@@ -25,17 +25,17 @@ impl<T: Debug> ErrorLog<T, anyhow::Error> {
 }
 
 /**
-Pre-defined [ErrorLog] using `Box<dyn DebugDisplay>` as `E`
+Pre-defined [`ErrorLog`] using `Box<dyn DebugDisplay>` as `E`
 
 Unlocks additional functions:
-- [merge_result_box()][Self::merge_result_box]
-- [push_result_box()][Self::push_result_box]
-- [push_err_box()][Self::push_err_box]
+- [`merge_result_box()`][Self::merge_result_box]
+- [`push_result_box()`][Self::push_result_box]
+- [`push_err_box()`][Self::push_err_box]
 */
 pub type ErrorLogBox<T> = ErrorLog<T, Box<dyn DebugDisplay>>;
 
 impl<T, E> ErrorLog<T, E> {
-    /// Display entries using [log] macros
+    /// Display entries using [`log`] macros
     pub fn display_fn_log(&mut self) -> &mut Self {
         self.display_fn = |level, unix, e| {
             let ts = format_unix_timestamp(unix);
@@ -50,7 +50,7 @@ impl<T, E> ErrorLog<T, E> {
         };
         self
     }
-    /// Display errors using [println]
+    /// Display errors using [`println`]
     pub fn display_fn_println(&mut self) -> &mut Self {
         self.display_fn = Self::default().display_fn;
         self
@@ -59,7 +59,7 @@ impl<T, E> ErrorLog<T, E> {
 
 #[cfg(feature = "native-dialog")]
 impl<T, E: Debug + Display> ErrorLog<T, E> {
-    /// Display [crate::Entries] using [native_dialog::MessageDialog]
+    /// Display [`crate::Entries`] using [`native_dialog::MessageDialog`]
     pub fn display_fn_native_dialog(&mut self) -> &mut Self {
         self.display_fn = |lvl, e| {
             if let Err(dialog_err) = native_dialog::MessageDialog::new()

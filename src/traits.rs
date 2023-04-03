@@ -20,9 +20,9 @@ impl<T, E> IntoIterator for ErrorLog<T, E> {
 
 #[cfg(feature = "helper-traits")]
 impl<T, E: Debug + Display> AddAssign<E> for ErrorLog<T, E> {
-    /// Make `err_log += ERROR` store error if [Result] if an [Err].
+    /// Make `err_log += ERROR` store error if [`Result`] if an [`Err`].
     ///
-    /// Shorthand for [push_err()][crate::ErrorLog::push_err]
+    /// Shorthand for [`push_err()`][crate::ErrorLog::push_err]
     fn add_assign(&mut self, rhs: E) {
         self.push_err(rhs);
     }
@@ -30,9 +30,9 @@ impl<T, E: Debug + Display> AddAssign<E> for ErrorLog<T, E> {
 
 #[cfg(feature = "helper-traits")]
 impl<T, U, E: Debug + Display> AddAssign<Result<U, E>> for ErrorLog<T, E> {
-    /// Make `err_log += RESULT` store error of [Result] if any.
+    /// Make `err_log += RESULT` store error of [`Result`] if any.
     ///
-    /// Shorthand for [push_result()][crate::ErrorLog::push_result]
+    /// Shorthand for [`push_result()`][crate::ErrorLog::push_result]
     fn add_assign(&mut self, rhs: Result<U, E>) {
         self.push_result(rhs);
     }
@@ -72,7 +72,7 @@ impl<T, U: Into<T>, E> MulAssign<Option<U>> for ErrorLog<T, E> {
 // }
 
 #[cfg(feature = "helper-traits")]
-/// Get immutable 'ok' value as [Option] by dereferencing
+/// Get immutable 'ok' value as [`Option`] by dereferencing
 impl<T, E> Deref for ErrorLog<T, E> {
     type Target = Option<T>;
     fn deref(&self) -> &Self::Target {
@@ -81,7 +81,7 @@ impl<T, E> Deref for ErrorLog<T, E> {
 }
 
 #[cfg(feature = "helper-traits")]
-/// Get mutable 'ok' value as [Option] by dereferencing
+/// Get mutable 'ok' value as [`Option`] by dereferencing
 impl<T, E> DerefMut for ErrorLog<T, E> {
     fn deref_mut(&mut self) -> &mut Self::Target {
         self.ok_mut()

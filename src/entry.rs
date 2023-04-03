@@ -7,11 +7,11 @@ use log::LevelFilter;
 /// Type alias for `Vec<Entry<E>>`
 pub type Entries<E> = Vec<Entry<E>>;
 
-/// Additional functions for [Entries]
+/// Additional functions for [`Entries`]
 pub trait EntriesExt {
     /// Sets all timestamps to 0
     ///
-    /// Useful for removing variation in tests involving [assert_eq]/[assert_ne]
+    /// Useful for removing variation in tests involving [`assert_eq`]/[assert_ne]
     fn clear_timestamps(self) -> Self;
 }
 
@@ -49,7 +49,7 @@ pub enum EntryContent<E> {
 
 impl<E> Entry<E> {
     /// Get level
-    /// Reurns [LevelFilter::Error] or the level of the Message
+    /// Reurns [`LevelFilter::Error`] or the level of the Message
     pub fn get_level(&self) -> LevelFilter {
         match self.content {
             EntryContent::Error(_) => LevelFilter::Error,
@@ -73,14 +73,14 @@ impl<E> Entry<E> {
     }
 }
 impl<E: Debug + Display> Entry<E> {
-    /// Get message as [String]
+    /// Get message as [`String`]
     pub fn get_message(&self, mode: &FormatMode) -> String {
         match self.get_message_filter(mode, &LevelFilter::Trace) {
             Some(msg) => msg,
             None => unreachable!("No Message should get filtered."),
         }
     }
-    /// Get Message as String fitering based on given [LevelFilter]
+    /// Get Message as String fitering based on given [`LevelFilter`]
     pub fn get_message_filter(&self, mode: &FormatMode, max_level: &LevelFilter) -> Option<String> {
         match &self.content {
             EntryContent::Error(err) => Some(match mode {

@@ -55,10 +55,10 @@ A Object to store multiple error messages and display them at once
 
 # Operations
 x:ErrorLog, E:Error, T:ok value, U:unrestricted type
-- `*x`: [ok()][Self::ok]/[ok_mut()][Self::ok_mut]: get (mutable) ok value as [Option]\<T>
-- `x += Result<U, E>`: Shorthand for [push_result()][Self::push_result]
-- `x += E`: Shorthand for [push_err()][Self::push_err]
-- `x *= `[Result]`<T, E>`: Shorthand for [merge_result()][Self::merge_result]
+- `*x`: [`ok()`][Self::ok]/[ok_mut()][Self::ok_mut]: get (mutable) ok value as [`Option`]\<T>
+- `x += Result<U, E>`: Shorthand for [`push_result()`][Self::push_result]
+- `x += E`: Shorthand for [`push_err()`][Self::push_err]
+- `x *= `[Result]`<T, E>`: Shorthand for [`merge_result()`][Self::merge_result]
 */
 #[derive(Clone, PartialEq, Eq, PartialOrd, Ord, Debug)]
 pub struct ErrorLog<T, E> {
