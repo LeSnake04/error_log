@@ -9,8 +9,8 @@ resolver = "2"
 [dependencies]
 anyhow = { version = "1.0.70", optional = true }
 native-dialog = { version = "0.6.3", optional = true }
-log = {version = "0.4.17", default-features = false }
-time = { version = "0.3.20", features = ["local-offset"], optional = true }
+log = { version = "0.4.17", default-features = false }
+time = { version = "0.3.20", features = ["formatting"], optional = true }
 libc-print = "0.1.21"
 
 [features]
