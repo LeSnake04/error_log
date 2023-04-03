@@ -6,7 +6,7 @@ use log::LevelFilter;
 /// Attach error message to given [ErrorLog]
 macro_rules! log_error {
     ($errlog: ident, $($msg: tt)+) => {
-        $errlog.push_message(error_log::LevelFilter::Debug, format!($($msg)+));
+        $errlog.push_message(error_log::LevelFilter::Error, format!($($msg)+));
     };
 }
 #[macro_export]
