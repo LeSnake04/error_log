@@ -1,4 +1,6 @@
 use crate::{print, ErrorLog, FormatMode};
+#[cfg(doc)]
+use crate::Entries;
 use alloc::string::String;
 use core::fmt::{Debug, Display};
 use log::LevelFilter;

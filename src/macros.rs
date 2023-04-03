@@ -1,3 +1,6 @@
+#[cfg(doc)]
+use crate::ErrorLog;
+
 #[macro_export]
 /**
 Macro to [push_result()][crate::ErrorLog::push_result] and return given [ErrorLog][crate::ErrorLog] if given [Result] is an [Err]
