@@ -31,7 +31,7 @@ pub struct Entry<E> {
     pub content: EntryContent<E>,
     /// Timestamp when the event occured
     pub timestamp: i64,
-    pub(crate) instant_display_displayed: bool,
+    pub(crate) instant_display_displayed: RefCell<bool>,
 }
 #[derive(Debug, Eq, PartialEq, PartialOrd, Ord, Clone)]
 /// The Content of the Entry
@@ -48,10 +48,19 @@ pub enum EntryContent<E> {
 }
 
 impl<E> Entry<E> {
+    /// Get level
+    /// Reurns [LevelFilter::Error] or the level of the Message
+    pub fn get_level(&self) -> LevelFilter {
+        match self.content {
+            EntryContent::Error(_) => LevelFilter::Error,
+            EntryContent::Message { level, .. } => level,
+        }
+    }
     fn new(content: EntryContent<E>) -> Self {
         Self {
             content,
-            instant_display_displayed: false,
+            timestamp: now(),
+            instant_display_displayed: RefCell::new(false),
         }
     }
     /// Create entry of type error
@@ -86,14 +95,6 @@ impl<E: Debug + Display> Entry<E> {
                 true => Some(msg.clone()),
                 false => None,
             },
-        }
-    }
-    /// Get level
-    /// Reurns [LevelFilter::Error] or the level of the Message
-    pub fn get_level(&self) -> LevelFilter {
-        match self.content {
-            EntryContent::Error(_) => LevelFilter::Error,
-            EntryContent::Message { level, .. } => level,
         }
     }
 }
