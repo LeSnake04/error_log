@@ -29,26 +29,26 @@ jobs:
 
       - name: Archive code coverage results
         uses: actions/upload-artifact@v1
-          with:
-            name: code-coverage-report
-            path: cobertura.xml
+        with:
+          name: code-coverage-report
+          path: cobertura.xml
 
       - run: rustup component add clippy
 
       - name: Run Clippy (All Features)
         uses: actions-rs/clippy-check@v1
-          with:
-            token: ${{ secrets.GITHUB_TOKEN }}
-            args: --all-features
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          args: --all-features
 
       - name: Run Clippy (no-std)
         uses: actions-rs/clippy-check@v1
-          with:
-            token: ${{ secrets.GITHUB_TOKEN }}
-            args: --no-default-features --features=default-no-std
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          args: --no-default-features --features=default-no-std
 
       - name: Run Clippy (No Default Features)
         uses: actions-rs/clippy-check@v1
-          with:
-            token: ${{ secrets.GITHUB_TOKEN }}
-            args: --no-default-features
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          args: --no-default-features
