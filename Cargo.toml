@@ -20,6 +20,7 @@ libc-print = "0.1.21"
 
 [features]
 default = ["std", "default_no_std"]
+# default = ["default_no_std"]
 default_no_std = ["helper-traits","instant-display","messages", "errors"]
 errors = []
 helper-traits = ["errors"]
