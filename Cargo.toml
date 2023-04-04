@@ -3,6 +3,11 @@ name = "error_log"
 version = "0.1.0"
 edition = "2021"
 resolver = "2"
+description = "Simple, struct-based Error-Handling" 
+authors = ["LeSnake04"]
+categories = ["no-std","rust-patterns"]
+keywords = ["error-handling","error","log"]
+repository = "https://github.com/LeSnake04/error_log" 
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
