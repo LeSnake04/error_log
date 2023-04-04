@@ -16,4 +16,4 @@ alias b := book
 
 book-publish:
 	just book build || exit
-	scp -r docs/book/html/* webedit@lesnake.xyz:/var/www/html/opt/error_log
+	rsync docs/book/html/* webedit@lesnake.xyz:/var/www/html/opt/error_log
