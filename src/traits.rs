@@ -2,11 +2,11 @@ use crate::{if_std, Entry, ErrorLog};
 use alloc::vec::IntoIter;
 #[cfg(feature = "helper-traits")]
 use core::{
-    fmt::Display,
+    fmt::{Debug, Display},
     ops::{AddAssign, Deref, DerefMut, MulAssign},
 };
 if_std! {
-    use {std::process::Termination, core::fmt::Debug};
+    use std::process::Termination;
 }
 
 impl<T, E> IntoIterator for ErrorLog<T, E> {

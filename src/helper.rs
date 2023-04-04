@@ -1,5 +1,10 @@
-use std::time::{SystemTime, UNIX_EPOCH};
-use time::format_description::well_known::Rfc3339;
+use crate::if_std;
+if_std! {
+    use {
+        std::time::{SystemTime, UNIX_EPOCH},
+        time::format_description::well_known::Rfc3339
+    };
+}
 
 pub(crate) fn now() -> i64 {
     #[cfg(feature = "std")]
@@ -11,6 +16,7 @@ pub(crate) fn now() -> i64 {
     0
 }
 
+#[allow(unused_variables)]
 pub fn format_unix_timestamp(unix: i64) -> String {
     #[cfg(not(feature = "std"))]
     return String::from("");
@@ -55,4 +61,5 @@ macro_rules! instant_display_helper {
         }
     };
 }
+use alloc::string::String;
 pub(crate) use instant_display_helper;

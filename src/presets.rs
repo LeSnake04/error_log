@@ -1,4 +1,4 @@
-use crate::{format_unix_timestamp, DebugDisplay, ErrorLog, FormatMode};
+use crate::{format_unix_timestamp, DebugDisplay, ErrorLog};
 use alloc::boxed::Box;
 #[cfg(feature = "anyhow")]
 use core::fmt::Debug;
@@ -16,10 +16,10 @@ pub type ErrorLogAnyhow<T> = ErrorLog<T, anyhow::Error>;
 #[cfg(feature = "anyhow")]
 /// Special methods for [`ErrorLogAnyhow`][crate::ErrorLogAnyhow]
 impl<T: Debug> ErrorLog<T, anyhow::Error> {
-    /// Creates a new [`ErrorLog`][crate::ErrorLog] and sets the [`FormatMode`] to Debug. Indented for best [`anyhow`] compatibility
+    /// Creates a new [`ErrorLog`][crate::ErrorLog] and sets the [`FormatMode`][crate::FormatMode] to Debug. Indented for best [`anyhow`] compatibility
     pub fn new_anyhow() -> Self {
         let mut out = Self::new();
-        out.display_mode(FormatMode::Debug);
+        out.display_mode(crate::FormatMode::Debug);
         out
     }
 }

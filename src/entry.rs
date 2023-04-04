@@ -1,4 +1,5 @@
 use crate::{now, FormatMode};
+use alloc::vec::Vec;
 use alloc::{format, string::String};
 use core::cell::RefCell;
 use core::fmt::{Debug, Display};
