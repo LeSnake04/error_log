@@ -21,10 +21,13 @@ jobs:
       - run: rustup component add clippy
 
       - name: Run Clippy (All Features)
+        if: always()
         run: cargo clippy --all-features
 
       - name: Run Clippy (no-std)
+        if: always()
         run: cargo clippy --no-default-features --features=default_no_std
 
       - name: Run Clippy (No Default Features)
+        if: always()
         run: cargo clippy --no-default-features
