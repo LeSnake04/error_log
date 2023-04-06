@@ -21,8 +21,12 @@ jobs:
         with:
           toolchain: stable
 
-      - run: curl -sSL https://github.com/psastras/sarif-rs/releases/download/clippy-sarif-latest/clippy-sarif-x86_64-unknown-linux-gnu -o ~/.cargo/bin/clippy-sarif
-      - run: curl -sSL https://github.com/psastras/sarif-rs/releases/download/sarif-fmt-latest/sarif-fmt-x86_64-unknown-linux-gnu -o ~/.cargo/bin/sarif-fmt
+      - name: Install dependencies
+        run: |
+          curl -sSL https://github.com/psastras/sarif-rs/releases/download/clippy-sarif-latest/clippy-sarif-x86_64-unknown-linux-gnu -o ~/.cargo/bin/clippy-sarif
+          chmod +x ~/.cargo/bin/clippy-sarif
+          curl -sSL https://github.com/psastras/sarif-rs/releases/download/sarif-fmt-latest/sarif-fmt-x86_64-unknown-linux-gnu -o ~/.cargo/bin/sarif-fmt
+          chmod +x ~/.cargo/bin/sarif-fmt
 
       - name: Run Clippy (All Features)
         run: cargo clippy --all-features \
