@@ -2,6 +2,10 @@ on: [push]
 
 name: rust
 
+# Make sure CI fails on all warnings, including Clippy lints
+env:
+  RUSTFLAGS: "-Dwarnings"
+
 jobs:
   main:
     name: Rust project
@@ -17,23 +21,22 @@ jobs:
         with:
           toolchain: stable
 
-      - run: rustup component add clippy
-
-      - name: Run Clippy 
-        uses: qernal/github-actions-rust-clippy@v2.0.2
+      - run: curl -sSL https://github.com/psastras/sarif-rs/releases/download/clippy-sarif-latest/clippy-sarif-x86_64-unknown-linux-gnu -o ~/.cargo/bin/clippy-sarif
+      - run: curl -sSL https://github.com/psastras/sarif-rs/releases/download/sarif-fmt-latest/sarif-fmt-x86_64-unknown-linux-gnu -o ~/.cargo/bin/sarif-fmt
 
       - name: Run Clippy (All Features)
-        uses: qernal/github-actions-rust-clippy@v2.0.2
-        with:
-          args: "--all-features"
-     
+        run: cargo clippy --all-features \
+          --message-format=json | clippy-sarif | tee rust-clippy-results.sarif | sarif-fmt
+
+      - name: Run Clippy
+        run: cargo clippy \
+          --message-format=json | clippy-sarif | tee rust-clippy-results.sarif | sarif-fmt
+
       - name: Run Clippy (default_no_std)
-        uses: qernal/github-actions-rust-clippy@v2.0.2
-        with:
-          args: "--no-default-features,--features=default_no_std"
+        run: cargo clippy --no-default-features --features=default_no_std \
+          --message-format=json | clippy-sarif | tee rust-clippy-results.sarif | sarif-fmt
 
       - name: Run Clippy (--no-default-features)
-        uses: qernal/github-actions-rust-clippy@v2.0.2
-        with:
-          args: "--no-default-features"
-     
+        run: cargo clippy --no-default-features \
+          --message-format=json | clippy-sarif | tee rust-clippy-results.sarif | sarif-fmt
+
