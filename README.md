@@ -5,3 +5,5 @@ them later.
 
 Its intended for desktop applications, websites and tui, that want to show error
 messages to their users.
+
+book: www.lesnake.xyz/opt/error_log

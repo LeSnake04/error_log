@@ -4,6 +4,7 @@
 /*!
 Library to store errors and log messages and display them later.
 
+book: www.lesnake.xyz/opt/error_log
 */
 
 extern crate alloc;
