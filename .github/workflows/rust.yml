@@ -24,7 +24,7 @@ jobs:
         run: cargo clippy --all-features
 
       - name: Run Clippy (no-std)
-        run: cargo --no-default-features --features=default-no-std
+        run: cargo clippy --no-default-features --features=default-no-std
 
       - name: Run Clippy (No Default Features)
         run: cargo clippy --no-default-features
