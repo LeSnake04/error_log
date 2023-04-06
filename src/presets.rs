@@ -61,7 +61,7 @@ impl<T, E> ErrorLog<T, E> {
 impl<T, E: Debug + Display> ErrorLog<T, E> {
     /// Display [`crate::Entries`] using [`native_dialog::MessageDialog`]
     pub fn display_fn_native_dialog(&mut self) -> &mut Self {
-        self.display_fn = |lvl, e| {
+        self.display_fn = |lvl, unix_ts, e| {
             if let Err(dialog_err) = native_dialog::MessageDialog::new()
                 .set_type(match lvl {
                     LevelFilter::Off => return,
@@ -70,7 +70,7 @@ impl<T, E: Debug + Display> ErrorLog<T, E> {
                     _ => MessageType::Info,
                 })
                 .set_title(lvl.as_str())
-                .set_text(&e)
+                .set_text(&format!("{}: {e}", format_unix_timestamp(unix_ts)))
                 .show_alert()
             {
                 println!("Failed to show MessageDialog: {}", dialog_err)
