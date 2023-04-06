@@ -20,14 +20,21 @@ jobs:
 
       - run: rustup component add clippy
 
+      - name: Run Clippy 
+        uses: qernal/github-actions-rust-clippy@v2.0.2
+
       - name: Run Clippy (All Features)
-        if: always()
-        run: cargo clippy --all-features
+        uses: qernal/github-actions-rust-clippy@v2.0.2
+        with:
+          args: "--all-features"
+     
+      - name: Run Clippy (default_no_std)
+        uses: qernal/github-actions-rust-clippy@v2.0.2
+        with:
+          args: "--no-default-features,--features=default_no_std"
 
-      - name: Run Clippy (no-std)
-        if: always()
-        run: cargo clippy --no-default-features --features=default_no_std
-
-      - name: Run Clippy (No Default Features)
-        if: always()
-        run: cargo clippy --no-default-features
+      - name: Run Clippy (--no-default-features)
+        uses: qernal/github-actions-rust-clippy@v2.0.2
+        with:
+          args: "--no-default-features"
+     
