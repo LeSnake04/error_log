@@ -21,7 +21,7 @@ pub fn format_unix_timestamp(unix: i64) -> String {
     #[cfg(not(feature = "std"))]
     return String::from("");
     #[cfg(feature = "std")]
-    time::OffsetDateTime::from_unix_timestamp(unix)
+    time::OffsetDateTime::from_unix_timestam(unix)
         .unwrap()
         .format(&Rfc3339)
         .unwrap()
