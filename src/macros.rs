@@ -1,6 +1,7 @@
 #[cfg(doc)]
 use crate::ErrorLog;
 
+#[cfg(feature = "errors")]
 #[macro_export]
 /**
 Macro to [`push_result()`][crate::ErrorLog::push_result] and return given [`ErrorLog`][crate::ErrorLog] if given [`Result`] is an [`Err`]
@@ -31,6 +32,7 @@ macro_rules! try_add {
     };
 }
 
+#[cfg(feature = "errors")]
 #[macro_export]
 /**
 Macro to [`merge_result()`][crate::ErrorLog::merge_result] and return given [`ErrorLog`][crate::ErrorLog] if given [`Result`] is an [`Err`]
@@ -64,6 +66,7 @@ macro_rules! try_merge {
     };
 }
 
+#[cfg(feature = "errors")]
 #[macro_export]
 /**
 Attach error to given [`ErrorLog`][crate::ErrorLog] and return it.

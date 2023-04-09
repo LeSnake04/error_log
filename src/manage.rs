@@ -1,7 +1,12 @@
-use crate::{instant_display_helper, DebugDisplay, Entry, ErrorLog};
-use alloc::{boxed::Box, string::String, vec::Vec};
+use crate::{instant_display_helper, ErrorLog};
+use alloc::{string::String, vec::Vec};
 use core::fmt::{Debug, Display};
 use log::LevelFilter;
+#[cfg(feature = "errors")]
+use {
+    crate::{DebugDisplay, Entry},
+    alloc::boxed::Box,
+};
 
 impl<T, E: Debug + Display> ErrorLog<T, E> {
     /// Appends errors from another instance
@@ -22,6 +27,19 @@ impl<T, E: Debug + Display> ErrorLog<T, E> {
     ) -> ErrorLog<U, F> {
         fun(self)
     }
+    /// Appends Entries before the Entries of the current `Vec`
+    pub fn prepend_entries<U>(&mut self, other: &mut ErrorLog<U, E>) -> &mut Self {
+        let mut entries = Vec::new();
+        entries.append(&mut other.entries);
+        entries.append(&mut self.entries);
+        self.entries = entries;
+        instant_display_helper!(self);
+        self
+    }
+}
+
+#[cfg(feature = "errors")]
+impl<T, E: Debug + Display> ErrorLog<T, E> {
     /// Stores [`Ok`] value from Result or push  [`Err`] from [`Result`] to entries  
     pub fn merge_result<U: Into<T>, F: Into<E>>(&mut self, res: Result<U, F>) -> bool {
         let out = res.is_ok();
@@ -35,15 +53,6 @@ impl<T, E: Debug + Display> ErrorLog<T, E> {
             }
         };
         out
-    }
-    /// Appends Entries before the Entries of the current `Vec`
-    pub fn prepend_entries<U>(&mut self, other: &mut ErrorLog<U, E>) -> &mut Self {
-        let mut entries = Vec::new();
-        entries.append(&mut other.entries);
-        entries.append(&mut self.entries);
-        self.entries = entries;
-        instant_display_helper!(self);
-        self
     }
     /// Push error to entries
     pub fn push_err(&mut self, err: impl Into<E>) -> &mut Self {
@@ -73,9 +82,9 @@ impl<T, E> ErrorLog<T, E> {
     pub fn ok(&self) -> &Option<T> {
         &self.ok
     }
-    /// Get owned `ok` value, discarding all errors.
+    /// Get owned `ok` value, discarding all entries.
     /// Related: [`display_ok()`][Self::display_ok]
-    pub fn ok_discard_err(self) -> Option<T> {
+    pub fn ok_discard(self) -> Option<T> {
         self.ok
     }
     /// Get mutable reference to `ok` value
@@ -101,12 +110,13 @@ impl<T, E> ErrorLog<T, E> {
         self
     }
     /// Set print function
-    pub fn set_print_fn(&mut self, fun: fn(LevelFilter, i64, String)) -> &mut Self {
+    pub fn set_display_fn(&mut self, fun: fn(LevelFilter, i64, String)) -> &mut Self {
         self.display_fn = fun;
         self
     }
 }
 
+#[cfg(feature = "errors")]
 impl<T> ErrorLog<T, Box<dyn DebugDisplay>> {
     /// If the Result is an Ok variant, store `ok` value.
     /// If the Result is an Err variant, store the Error as Box

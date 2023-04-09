@@ -1,3 +1,4 @@
+#![cfg(feature = "errors")]
 use error_log::{self, ErrorLogBox};
 use pretty_assertions::assert_eq;
 
