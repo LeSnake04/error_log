@@ -1,3 +1,4 @@
+#![cfg(feature = "errors")]
 use error_log::ErrorLog;
 use pretty_assertions::assert_eq;
 use std::num::ParseIntError;
@@ -30,7 +31,7 @@ fn run() -> ErrorLog<i32, ParseIntError> {
         err_log *= "42".parse::<i32>(); // Shorthand
         err_log *= "a42".parse::<i32>(); // Shorthand
         assert_eq!(err_log.ok(), &Some(42));
-        assert_eq!(err_log.entries().len(), 3);
+        assert_eq!(err_log.entries().len(), 4);
     }
     // Set Ok Value.
     err_log.set_ok(123);
@@ -39,7 +40,7 @@ fn run() -> ErrorLog<i32, ParseIntError> {
     {
         *err_log = Some(123);
         assert_eq!(err_log.ok(), &Some(123));
-        assert_eq!(err_log.entries().len(), 2);
+        assert_eq!(err_log.entries().len(), 4);
     }
     #[cfg(not(feature = "helper-traits"))]
     assert_eq!(err_log.entries().len(), 2);
