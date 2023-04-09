@@ -1,3 +1,4 @@
+#![cfg(feature = "messages")]
 use pretty_assertions::assert_eq;
 
 use std::num::ParseIntError;

@@ -1,3 +1,4 @@
+#![cfg(feature = "messages")]
 use crate::{Entry, ErrorLog};
 use alloc::string::String;
 use log::LevelFilter;
