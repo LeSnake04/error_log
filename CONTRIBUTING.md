@@ -22,3 +22,7 @@ do")
 - examples added or changed: "ex: "
 - added features "feat: "
 - fixes: "fix: "
+
+## Testing
+
+- run `just t`or `just test` to make sure everything works

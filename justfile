@@ -7,9 +7,11 @@ default:
 alias t := test
 test:
 	cargo test --color always --all-features
-	cargo run --package anyhow_example --color always
-	cargo run --package async_example --color always
-
+	cargo test --color always
+	cargo test --color always --no-default-features --features default_no_std
+	cargo test --color always --no-default-features
+	cargo run --color always --example anyhow --features anyhow
+	cargo run --color always --example async --features anyhow
 alias b := book
 @book cmd:
 	cd docs && mdbook $1
