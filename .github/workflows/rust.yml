@@ -16,6 +16,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+
+      - uses: extractions/setup-just@v1
       
       - uses: rui314/setup-mold@v1
 
@@ -43,3 +45,6 @@ jobs:
       - name: Run Clippy (--no-default-features)
         run: |
           cargo clippy --no-default-features
+
+      - name: Run tests
+        run: just test
