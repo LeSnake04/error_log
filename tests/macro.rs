@@ -1,4 +1,5 @@
 #![cfg(test)]
+#![cfg(feature = "errors")]
 use std::num::ParseIntError;
 
 use error_log::{try_add, try_merge, ErrorLog};

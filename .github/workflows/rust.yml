@@ -1,0 +1,50 @@
+on: [push]
+
+name: rust
+
+# Make sure CI fails on all warnings, including Clippy lints
+env:
+  RUSTFLAGS: "-Dwarnings"
+
+jobs:
+  main:
+    name: Rust project
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      security-events: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - uses: extractions/setup-just@v1
+      
+      - uses: rui314/setup-mold@v1
+
+      - name: Install stable toolchain
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          toolchain: stable
+
+      - name: Run Clippy (All Features)
+        run: |
+          cargo clippy --all-features
+
+      - name: Run Clippy
+        run: | 
+          cargo clippy
+
+      - name: Run Clippy (default_no_std)
+        run: |
+          cargo clippy --no-default-features --features=default_no_std
+
+      - name: Run Clippy (--no-default-features)
+        run: |
+          cargo clippy --no-default-features
+
+      - name: Run Clippy (--no-default-features)
+        run: |
+          cargo clippy --no-default-features
+
+      - name: Run tests
+        run: just test

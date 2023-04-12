@@ -1,3 +1,4 @@
+#![cfg(feature = "errors")]
 use error_log::{self, ErrorLogBox};
 use pretty_assertions::assert_eq;
 
@@ -9,5 +10,6 @@ fn boxed() {
     err_log.push_err_box("custom error");
     assert_eq!(err_log.entries().len(), 2);
     err_log.merge_result_box(dbg!("42".parse::<i32>()));
+    #[cfg(feature = "helper-traits")]
     assert_eq!(*err_log, Some(42));
 }

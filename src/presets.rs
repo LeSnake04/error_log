@@ -1,18 +1,20 @@
-use crate::{format_unix_timestamp, DebugDisplay, ErrorLog};
-use alloc::boxed::Box;
+use crate::{format_unix_timestamp, ErrorLog};
 #[cfg(feature = "anyhow")]
 use core::fmt::Debug;
 use log::{debug, error, info, trace, warn, LevelFilter};
+#[cfg(feature = "errors")]
+use {crate::DebugDisplay, alloc::boxed::Box};
 #[cfg(feature = "native-dialog")]
 use {core::fmt::Display, native_dialog::MessageType};
 
+#[cfg(feature = "anyhow")]
 /**
 Pre-defined [`ErrorLog`] Using [`anyhow::Error`] as `E`
 
 Its suggested to use [`new_anyhow()`][crate::ErrorLog::new_anyhow] to load optimized settings.
 */
-#[cfg(feature = "anyhow")]
 pub type ErrorLogAnyhow<T> = ErrorLog<T, anyhow::Error>;
+
 #[cfg(feature = "anyhow")]
 /// Special methods for [`ErrorLogAnyhow`][crate::ErrorLogAnyhow]
 impl<T: Debug> ErrorLog<T, anyhow::Error> {
@@ -24,6 +26,7 @@ impl<T: Debug> ErrorLog<T, anyhow::Error> {
     }
 }
 
+#[cfg(feature = "errors")]
 /**
 Pre-defined [`ErrorLog`] using `Box<dyn DebugDisplay>` as `E`
 

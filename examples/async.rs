@@ -1,15 +1,16 @@
-// use
-
-use std::sync::{Arc, Mutex};
-
 use anyhow::Context;
 use error_log::ErrorLogAnyhow;
+use std::sync::{Arc, Mutex};
 use tokio::{spawn as tspawn, task::JoinHandle};
 
 #[tokio::main]
 async fn main() {
     let err_log = Arc::new(Mutex::new(ErrorLogAnyhow::new_anyhow()));
-    err_log.lock().unwrap().instant_display(true);
+    err_log
+        .lock()
+        .unwrap()
+        .instant_display(true)
+        .delimiter("\n");
 
     let mut tasks: Vec<JoinHandle<i32>> = vec![
         run(err_log.clone(), 0),
@@ -35,25 +36,18 @@ async fn main() {
 
 fn run(err_log: Arc<Mutex<ErrorLogAnyhow<i32>>>, id: u8) -> JoinHandle<i32> {
     tspawn(async move {
-        if let Some(out) = err_log
-            .lock()
-            .unwrap()
-            .push_result("abc".parse::<i32>().with_context(|| format!("Thread {id}")))
-        {
+        if let Some(out) = err_log.lock().unwrap().push_result(
+            "abc"
+                .parse::<i32>()
+                .with_context(|| format!("Error in thread {id}")),
+        ) {
             return out;
         }
-        if let Some(out) = err_log
-            .lock()
-            .unwrap()
-            .push_result("a2".parse::<i32>().with_context(|| format!("Thread {id}")))
-        {
-            return out;
-        }
-        if let Some(out) = err_log
-            .lock()
-            .unwrap()
-            .push_result("123".parse::<i32>().with_context(|| format!("Thread {id}")))
-        {
+        if let Some(out) = err_log.lock().unwrap().push_result(
+            "123"
+                .parse::<i32>()
+                .with_context(|| format!("Error in thread {id}")),
+        ) {
             return out;
         }
         32

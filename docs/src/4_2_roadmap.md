@@ -3,11 +3,12 @@
 - [x] Basic docs
 - [ ] collect feedback
 - [ ] initial book
+  - [ ] comparison with tracing
   - [ ] complete no_std page
   - [ ] usage
   - [ ] FAQ
     - [ ] Wait for questions
-    - [ ] Answears
+    - [ ] Answers
 - [ ] tests
   - [ ] messages_owned/cloned
   - [ ] errors_owned/cloned

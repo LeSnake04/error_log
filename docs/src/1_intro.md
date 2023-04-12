@@ -56,3 +56,13 @@ Option 1+2 and allow the use of `instant_display`.
 - [no_std support](./1_1_no_std.md)
 
 ## Features
+
+- default
+- std
+- default_no_std
+  - default features but without std
+- instant-display
+- messages
+  - toggles managing of log messages
+- errors
+  - toggles managing of errors
