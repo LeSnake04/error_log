@@ -24,36 +24,22 @@ jobs:
         with:
           toolchain: stable
 
-      - name: Install dependencies
-        run: |
-          curl -sSL https://github.com/psastras/sarif-rs/releases/download/clippy-sarif-latest/clippy-sarif-x86_64-unknown-linux-gnu -o ~/.cargo/bin/clippy-sarif
-          chmod +x ~/.cargo/bin/clippy-sarif
-          curl -sSL https://github.com/psastras/sarif-rs/releases/download/sarif-fmt-latest/sarif-fmt-x86_64-unknown-linux-gnu -o ~/.cargo/bin/sarif-fmt
-          chmod +x ~/.cargo/bin/sarif-fmt
-
       - name: Run Clippy (All Features)
         run: |
-          cargo clippy --all-features \
-          --message-format=json | clippy-sarif | tee rust-clippy-results.sarif | sarif-fmt
+          cargo clippy --all-features
 
       - name: Run Clippy
         run: | 
-          cargo clippy \
-          --message-format=json | clippy-sarif | tee rust-clippy-results.sarif | sarif-fmt
+          cargo clippy
 
       - name: Run Clippy (default_no_std)
         run: |
-          cargo clippy --no-default-features --features=default_no_std \
-          --message-format=json | clippy-sarif | tee rust-clippy-results.sarif | sarif-fmt
+          cargo clippy --no-default-features --features=default_no_std
 
       - name: Run Clippy (--no-default-features)
         run: |
-          cargo clippy --no-default-features \
-          --message-format=json | clippy-sarif | tee rust-clippy-results.sarif | sarif-fmt
+          cargo clippy --no-default-features
 
-      - name: Upload analysis results to GitHub
-        uses: github/codeql-action/upload-sarif@v2
-        with:
-         sarif_file: rust-clippy-results.sarif
-         wait-for-processing: true
-
+      - name: Run Clippy (--no-default-features)
+        run: |
+          cargo clippy --no-default-features
