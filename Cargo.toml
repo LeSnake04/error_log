@@ -31,9 +31,8 @@ libc-print = "0.1.21"
 
 [features]
 anyhow = ["dep:anyhow","errors"]
-default = ["std", "default_no_std"]
-# default = ["default_no_std"]
-default_no_std = ["helper-traits","instant-display","messages", "errors"]
+default = ["std", "default-no-std"]
+default-no-std = ["helper-traits","instant-display","messages", "errors"]
 errors = []
 helper-traits = ["errors"]
 instant-display = []

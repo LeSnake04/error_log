@@ -59,7 +59,7 @@ Option 1+2 and allow the use of `instant_display`.
 
 - default
 - std
-- default_no_std
+- default-no-std
   - default features but without std
 - instant-display
 - messages
