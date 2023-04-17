@@ -9,5 +9,9 @@
 ### 0.1.1
 
 - fixed compilation with `native-dialog` feature
-- made errors and messages feature functional
 - added link to book to docs
+
+### 0.1.2
+
+- made errors and messages feature functional
+- (internal) added github actions
