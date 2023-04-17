@@ -66,3 +66,12 @@ Option 1+2 and allow the use of `instant_display`.
   - toggles managing of log messages
 - errors
   - toggles managing of errors
+
+## Comparison with `tracing`
+
+This Crate aims to provide a more direct api access compared to `tracing`. In
+`error_log` you can easily define how to parse the Errors and Log messages and
+also get direct acces to the underlying data. But it require specific return
+values, so it isn't meant for crates wich are intended to be widely used by
+other developers. For such public libraries I recommend using
+[`tracing`](https://tokio.rs/tokio/topics/tracing) instead
