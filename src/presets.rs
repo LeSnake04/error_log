@@ -1,11 +1,11 @@
 use crate::{format_unix_timestamp, ErrorLog};
-#[cfg(feature = "anyhow")]
-use core::fmt::Debug;
+#[allow(unused_imports)]
+use core::fmt::{Debug, Display};
 use log::{debug, error, info, trace, warn, LevelFilter};
+#[cfg(feature = "native-dialog")]
+use native_dialog::MessageType;
 #[cfg(feature = "errors")]
 use {crate::DebugDisplay, alloc::boxed::Box};
-#[cfg(feature = "native-dialog")]
-use {core::fmt::Display, native_dialog::MessageType};
 
 #[cfg(feature = "anyhow")]
 /**
