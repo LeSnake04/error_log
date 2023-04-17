@@ -1,9 +1,8 @@
 # Roadmap
 
-- [x] Basic docs
 - [ ] collect feedback
 - [ ] initial book
-  - [ ] comparison with tracing
+  - [x] comparison with tracing
   - [ ] complete no_std page
   - [ ] usage
   - [ ] FAQ
