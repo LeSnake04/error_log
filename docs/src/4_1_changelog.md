@@ -15,3 +15,8 @@
 
 - made errors and messages feature functional
 - (internal) added github actions
+
+### 0.1.3
+
+- fix compilation with `native-dialog` feature
+- rename "default_no_std" feature to "default-no-std"
