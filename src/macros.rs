@@ -77,7 +77,7 @@ Arguments:
 */
 macro_rules! return_err {
     ($err: expr, $errlog: ident) => {
-        $errlog.push_err(e);
+        $errlog.push_err($err);
         return $errlog;
     };
 }
@@ -92,7 +92,7 @@ Arguments:
 */
 macro_rules! return_ok {
     ($err: expr, $errlog: ident) => {
-        $errlog.set_ok(e);
+        $errlog.set_ok($err);
         return $errlog;
     };
 }
