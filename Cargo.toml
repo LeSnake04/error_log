@@ -1,6 +1,6 @@
 [package]
 name = "error_log"
-version = "0.1.1"
+version = "0.1.3"
 edition = "2021"
 resolver = "2"
 
@@ -31,9 +31,8 @@ libc-print = "0.1.21"
 
 [features]
 anyhow = ["dep:anyhow","errors"]
-default = ["std", "default_no_std"]
-# default = ["default_no_std"]
-default_no_std = ["helper-traits","instant-display","messages", "errors"]
+default = ["std", "default-no-std"]
+default-no-std = ["helper-traits","instant-display","messages", "errors"]
 errors = []
 helper-traits = ["errors"]
 instant-display = []
