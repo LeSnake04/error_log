@@ -34,9 +34,9 @@ jobs:
         run: | 
           cargo clippy
 
-      - name: Run Clippy (default_no_std)
+      - name: Run Clippy (default-no-std)
         run: |
-          cargo clippy --no-default-features --features=default_no_std
+          cargo clippy --no-default-features --features=default-no-std
 
       - name: Run Clippy (--no-default-features)
         run: |
